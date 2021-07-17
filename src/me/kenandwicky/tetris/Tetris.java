@@ -19,9 +19,17 @@ public class Tetris extends JavaPlugin {
 	    PlayerInventory pi = player.getInventory();
 		if(cmd.getName().equalsIgnoreCase("givebanner")) {
 			Banner banner = new Banner();
-			for(char i = 'A'; i <= 'C'; i++) {
-				pi.addItem(banner.Make(i));
-			}
+			pi.addItem(banner.Make('0'));
+			pi.addItem(banner.Make('1'));
+			pi.addItem(banner.Make('2'));
+			pi.addItem(banner.Make('3'));
+			pi.addItem(banner.Make('4'));
+			pi.addItem(banner.Make('5'));
+			pi.addItem(banner.Make('6'));
+			pi.addItem(banner.Make('7'));
+			pi.addItem(banner.Make('8'));
+			pi.addItem(banner.Make('9'));
+			pi.addItem(banner.Make('_'));
 			return true;
 		}
 		return true;
