@@ -1,0 +1,11 @@
+name: SingleTetris
+main: me.kenandwicky.tetris.Tetris
+author: KenKwokandWickyYiu
+description: A funny Tetris Game with Singal Player
+version: 1.0
+api-version: 1.13
+
+commands:
+  givebanner:
+   usage: /<command>
+   description: for testing only
