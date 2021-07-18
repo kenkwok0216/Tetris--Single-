@@ -1,4 +1,4 @@
-package me.kenandwicky.tetris.Broad;
+package me.kenandwicky.tetris.Board;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
@@ -11,7 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 
-public class Banner {
+public class BannerClass {
 	
 	CreateBanner banner = new CreateBanner();
 	
@@ -98,8 +98,9 @@ class CreateBanner {
 			return ZeroCreator.Create();
 		} else if (c == '_') {
 			return UnderscoreCreator.Create();
-		}
+		} else {
 		return new ItemStack(Material.WHITE_BANNER, 1);
+		}
 	}	
 }
 
