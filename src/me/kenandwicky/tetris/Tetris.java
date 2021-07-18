@@ -1,6 +1,6 @@
 package me.kenandwicky.tetris;
 
-import me.kenandwicky.tetris.Broad.*;
+import me.kenandwicky.tetris.Board.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -18,7 +18,7 @@ public class Tetris extends JavaPlugin {
 		Player player = (Player) sender;
 	    PlayerInventory pi = player.getInventory();
 		if(cmd.getName().equalsIgnoreCase("givebanner")) {
-			Banner banner = new Banner();
+			BannerClass banner = new BannerClass();
 			pi.addItem(banner.Make('0'));
 			pi.addItem(banner.Make('1'));
 			pi.addItem(banner.Make('2'));
@@ -32,6 +32,17 @@ public class Tetris extends JavaPlugin {
 			pi.addItem(banner.Make('_'));
 			return true;
 		}
+		
+		if(cmd.getName().equalsIgnoreCase("settetris")) {
+			Board board = new Board();
+			board.building(player);		
+			
+		}
+		
+		
+		
 		return true;
 	}
+	
+	
 }
