@@ -98,6 +98,8 @@ class CreateBanner {
 			return ZeroCreator.Create();
 		} else if (c == '_') {
 			return UnderscoreCreator.Create();
+		} else if (c == ':') {
+			return ColonCreator.Create();
 		} else {
 		return new ItemStack(Material.WHITE_BANNER, 1);
 		}
@@ -849,4 +851,24 @@ class UnderscoreCreator {
 	}
 }
 
+class ColonCreator {
+	static ItemStack Create() {
+		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		BannerMeta m = (BannerMeta)i.getItemMeta();
+		
+		List<Pattern> patterns = new ArrayList<Pattern>();
+		
+		patterns.add(new Pattern(DyeColor.BLACK, PatternType.STRIPE_CENTER));
+		patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE));
+		patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_SMALL));
+		patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
+		patterns.add(new Pattern(DyeColor.WHITE, PatternType.BORDER));
+		patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+		m.setPatterns(patterns);
+		m.setDisplayName("Banner Colon");
+		i.setItemMeta(m);
+		
+		return i;		
+	}
+}
 
