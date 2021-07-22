@@ -98,8 +98,10 @@ class CreateBanner {
 			return ZeroCreator.Create();
 		} else if (c == '_') {
 			return UnderscoreCreator.Create();
+		} else if (c == ':') {
+			return ColonCreator.Create();
 		} else {
-		return new ItemStack(Material.WHITE_BANNER, 1);
+		return new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		}
 	}	
 }
@@ -107,7 +109,7 @@ class CreateBanner {
 //delegators
 class ACreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -129,7 +131,7 @@ class ACreator {
 
 class BCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -153,7 +155,7 @@ class BCreator {
 
 class CCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -175,7 +177,7 @@ class CCreator {
 
 class DCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -196,7 +198,7 @@ class DCreator {
 
 class ECreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -216,7 +218,7 @@ class ECreator {
 
 class FCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -236,7 +238,7 @@ class FCreator {
 
 class GCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -257,7 +259,7 @@ class GCreator {
 
 class HCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.BLACK_BANNER, 1);
+		ItemStack i = new ItemStack(Material.BLACK_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -277,7 +279,7 @@ class HCreator {
 
 class ICreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -296,7 +298,7 @@ class ICreator {
 
 class JCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -316,7 +318,7 @@ class JCreator {
 
 class KCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -336,7 +338,7 @@ class KCreator {
 
 class LCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -354,7 +356,7 @@ class LCreator {
 
 class MCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -374,7 +376,7 @@ class MCreator {
 
 class NCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -394,7 +396,7 @@ class NCreator {
 
 class OCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -414,7 +416,7 @@ class OCreator {
 
 class PCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -435,7 +437,7 @@ class PCreator {
 
 class QCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.BLACK_BANNER, 1);
+		ItemStack i = new ItemStack(Material.BLACK_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -455,7 +457,7 @@ class QCreator {
 
 class RCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -476,7 +478,7 @@ class RCreator {
 
 class SCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.BLACK_BANNER, 1);
+		ItemStack i = new ItemStack(Material.BLACK_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -495,7 +497,7 @@ class SCreator {
 
 class TCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -513,7 +515,7 @@ class TCreator {
 
 class UCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -532,7 +534,7 @@ class UCreator {
 
 class VCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -552,7 +554,7 @@ class VCreator {
 
 class WCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -572,7 +574,7 @@ class WCreator {
 
 class XCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -589,7 +591,7 @@ class XCreator {
 
 class YCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -608,7 +610,7 @@ class YCreator {
 
 class ZCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -647,7 +649,7 @@ class OneCreator {
 
 class TwoCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -667,7 +669,7 @@ class TwoCreator {
 
 class ThreeCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -688,7 +690,7 @@ class ThreeCreator {
 
 class FourCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -708,7 +710,7 @@ class FourCreator {
 
 class FiveCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -728,7 +730,7 @@ class FiveCreator {
 
 class SixCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -750,7 +752,7 @@ class SixCreator {
 
 class SevenCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -768,7 +770,7 @@ class SevenCreator {
 
 class EightCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -789,7 +791,7 @@ class EightCreator {
 
 class NineCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -811,7 +813,7 @@ class NineCreator {
 
 class ZeroCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -832,7 +834,7 @@ class ZeroCreator {
 
 class UnderscoreCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
@@ -849,4 +851,24 @@ class UnderscoreCreator {
 	}
 }
 
+class ColonCreator {
+	static ItemStack Create() {
+		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		BannerMeta m = (BannerMeta)i.getItemMeta();
+		
+		List<Pattern> patterns = new ArrayList<Pattern>();
+		
+		patterns.add(new Pattern(DyeColor.BLACK, PatternType.STRIPE_CENTER));
+		patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE));
+		patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_SMALL));
+		patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
+		patterns.add(new Pattern(DyeColor.WHITE, PatternType.BORDER));
+		patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+		m.setPatterns(patterns);
+		m.setDisplayName("Banner Colon");
+		i.setItemMeta(m);
+		
+		return i;		
+	}
+}
 
