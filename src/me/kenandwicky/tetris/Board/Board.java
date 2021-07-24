@@ -68,14 +68,19 @@ public class Board {
 				}
 			}			
 		} else {
-			return;
+			settings = SettingsManager.getInstance();
 		}	
 	}
 	
 	private static void SavePosition(String string, int x, int y, int z) {
-		settings.getData().set(string + ".X", x);
-		settings.getData().set(string + ".Y", y);
-		settings.getData().set(string + ".Z", z);
+		if (settings != null) {
+			settings.getData().set(string + ".X", x);
+			settings.getData().set(string + ".Y", y);
+			settings.getData().set(string + ".Z", z);
+		} else {
+			settings = SettingsManager.getInstance();
+		}
+
 	}
 
 	private static void BuildBanner(Location blockloc, char c) {
@@ -87,7 +92,36 @@ public class Board {
 			banner.setPatterns(meta.getPatterns());
 			banner.update();
 		}		
-	}	
+	}
+	
+	public static void NameUpdate(String s) {
+		if(settings != null) {
+			int x = settings.getData().getInt("NamePosition.X");
+			int y = settings.getData().getInt("NamePosition.Y");
+			int z = settings.getData().getInt("NamePosition.Z");
+			String reverse = "";
+			for(int i = s.length() - 1; i >= 0; i--) {
+				if(s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
+					reverse = reverse + (char) (s.charAt(i) - ('a' - 'A'));
+				} else {
+					reverse = reverse + s.charAt(i);
+				}	
+			}
+			for(int i = 0; i < s.length(); i++) {
+				BuildBanner(new Location(player.getWorld(), x + i, y, z), reverse.charAt(i));
+			}
+			for(int i = 0; i < 18 - s.length(); i++) {
+				BuildBanner(new Location(player.getWorld(), x + i + s.length(), y, z), '?');
+			}
+		} else {
+			settings = SettingsManager.getInstance();
+		}
+	}
+	
+	public static void initialize(Player player, SettingsManager settings) {
+			Board.settings = settings;
+			Board.player = player;
+	}
 	
 	//The East and West 
 	private String PlayerDirection(Player player) {

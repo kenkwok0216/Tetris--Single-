@@ -12,3 +12,10 @@ commands:
   settetris:
    usage: /<command>
    description: To build the tetris
+  initializetetris:
+   usage: /<command>
+   description: Setting
+  re:
+   usage: /<command>
+   description: Settingsss
+  

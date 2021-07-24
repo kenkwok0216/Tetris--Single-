@@ -1,10 +1,12 @@
 package me.kenandwicky.tetris.Listener;
 
+import org.bukkit.GameMode;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 import me.kenandwicky.tetris.Board.Board;
 
@@ -16,6 +18,13 @@ public class EventListener implements Listener {
         if (e.getClickedBlock().getState() instanceof Sign) {
         	Board.setup();
         }
+    }
+    
+    @EventHandler
+    public void onPlayerJoing(PlayerJoinEvent e) {
+    	if (e.getPlayer().getGameMode() == GameMode.ADVENTURE) {
+    		Board.NameUpdate(e.getPlayer().getName());
+    	}
     }
 	
 }
