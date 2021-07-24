@@ -16,15 +16,22 @@ public class Tetris extends JavaPlugin {
 	public void onEnable() {
 		Bukkit.getServer().getConsoleSender().sendMessage("Tetris is working");
 		Bukkit.getServer().getPluginManager().registerEvents(new EventListener(), this);
-		settings.setup(this);		
+		settings.setup(this);	
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		Player player = (Player) sender;	
+		Player player = (Player) sender;
+		if (cmd.getName().equalsIgnoreCase("initializetetris")) {
+			Board.initialize(player, settings);	
+		}
+		
+		if (cmd.getName().equalsIgnoreCase("re")) {
+			Board.NameUpdate(args[0]);	
+		} 
+		
 		if(cmd.getName().equalsIgnoreCase("settetris")) {
 			Board board = new Board();
 			board.building(player, settings);	
-			
 		}
 		
 		

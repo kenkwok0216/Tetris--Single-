@@ -629,7 +629,7 @@ class ZCreator {
 
 class OneCreator {
 	static ItemStack Create() {
-		ItemStack i = new ItemStack(Material.WHITE_BANNER, 1);
+		ItemStack i = new ItemStack(Material.WHITE_WALL_BANNER, 1);
 		BannerMeta m = (BannerMeta)i.getItemMeta();
 		
 		List<Pattern> patterns = new ArrayList<Pattern>();
