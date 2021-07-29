@@ -34,6 +34,11 @@ public class Tetris extends JavaPlugin {
 			board.building(player, settings);	
 		}
 		
+		if(cmd.getName().equalsIgnoreCase("next")) {
+			Board board = new Board();
+			board.NextPiece();
+		}
+		
 		
 		
 		return true;
