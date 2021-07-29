@@ -1,5 +1,7 @@
 package me.kenandwicky.tetris.Board;
 
+import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -7,10 +9,16 @@ import org.bukkit.block.Banner;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.BannerMeta;
 
+import me.kenandwicky.tetris.Utils;
+import me.kenandwicky.tetris.Tetromino.Tetromino;
+import me.kenandwicky.tetris.Tetromino.TetrominoType;
+
 public class Board {
 		
 	private static SettingsManager settings;
 	private static Player player;
+	private static TetrominoType[] bag = new TetrominoType[4];
+	private static int NextPositionX, NextPositionY;
 	
 	public void building(Player player, SettingsManager settings) {
 		Board.settings = settings;
@@ -71,6 +79,58 @@ public class Board {
 			settings = SettingsManager.getInstance();
 		}	
 	}
+	
+	public void NextPiece() {
+		Random rnd = new Random();
+		if (bag[0] == null) {
+			for (int i = 1; i < 5; i++) {
+				int x = rnd.nextInt(7);
+				TetrominoType type = TetrominoType.values()[x];
+				Tetromino piece = new Tetromino(type);
+				bag[i - 1] = type;
+				NextPositionX = settings.getData().getInt("NextPosition.X") - 1;
+				NextPositionY = settings.getData().getInt("NextPosition.Y") + (4-i) * 5;
+				ClearNext(NextPositionX, NextPositionY, settings.getData().getInt("NextPosition.Z") + 1);
+				setPieceBlocks(piece, type);
+			}
+		} else {
+			for (int i = 0; i < 3; i++) {
+				bag[i] = bag[i+1];
+			}
+			int x = rnd.nextInt(7);
+			bag[3] = TetrominoType.values()[x];
+			for (int i = 1; i < 5; i++) {
+				Tetromino piece = new Tetromino(bag[i-1]);
+				NextPositionX = settings.getData().getInt("NextPosition.X") - 1;
+				NextPositionY = settings.getData().getInt("NextPosition.Y") + (4-i) * 5;
+				ClearNext(NextPositionX, NextPositionY, settings.getData().getInt("NextPosition.Z") + 1);
+				setPieceBlocks(piece, bag[i-1]);
+			}
+		}
+				
+	}
+	
+	public void ClearNext(int x, int y, int z) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+            	Bukkit.getWorld("world").getBlockAt(x - i, y + j, z).setType(Material.AIR);
+            }
+        }
+	}
+	
+    public void setPieceBlocks(Tetromino piece, TetrominoType type) {
+        for (int i = 0; i < 4; i++) {
+            int coordX = NextPositionX + piece.coords[i][0];
+            int coordY = NextPositionY + piece.coords[i][1];
+            setBlock(coordX, coordY, type);
+        }
+    }
+    
+    public void setBlock(int x, int y, TetrominoType t) {
+        Utils.placeTetromino("world", x, y, settings.getData().getInt("NextPosition.Z") + 1, t);
+    }
+   
+    
 	
 	private static void SavePosition(String string, int x, int y, int z) {
 		if (settings != null) {
