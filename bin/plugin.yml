@@ -21,4 +21,7 @@ commands:
   next:
    usage: /<command>
    description: Test
+  hold:
+   usage: /<command>
+   description: Test
   
