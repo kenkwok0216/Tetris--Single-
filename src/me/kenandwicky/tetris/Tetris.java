@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Tetris extends JavaPlugin {
 	
 	SettingsManager settings = SettingsManager.getInstance();
+	Board board = new Board();
 	
 	public void onEnable() {
 		Bukkit.getServer().getConsoleSender().sendMessage("Tetris is working");
@@ -35,8 +36,11 @@ public class Tetris extends JavaPlugin {
 		}
 		
 		if(cmd.getName().equalsIgnoreCase("next")) {
-			Board board = new Board();
 			board.NextPiece();
+		}
+		
+		if(cmd.getName().equalsIgnoreCase("hold")) {
+			board.HoldBox();
 		}
 		
 		

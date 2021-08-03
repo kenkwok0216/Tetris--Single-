@@ -18,7 +18,12 @@ public class Board {
 	private static SettingsManager settings;
 	private static Player player;
 	private static TetrominoType[] bag = new TetrominoType[4];
-	private static int NextPositionX, NextPositionY;
+	private static int NextPositionX, NextPositionY, NextPositionZ;
+	private static int HoldPositionX, HoldPositionY, HoldPositionZ;
+	private static Tetromino currentpiece;
+	private static Tetromino holdpiece;
+	private boolean isHold = false;
+	public static TetrominoType[][] board = new TetrominoType[20][10];
 	
 	public void building(Player player, SettingsManager settings) {
 		Board.settings = settings;
@@ -83,6 +88,10 @@ public class Board {
 	public void NextPiece() {
 		Random rnd = new Random();
 		if (bag[0] == null) {
+			int y = rnd.nextInt(7);
+			TetrominoType starttype = TetrominoType.values()[y];
+			Tetromino startpiece = new Tetromino(starttype);
+			currentpiece = startpiece;
 			for (int i = 1; i < 5; i++) {
 				int x = rnd.nextInt(7);
 				TetrominoType type = TetrominoType.values()[x];
@@ -90,10 +99,13 @@ public class Board {
 				bag[i - 1] = type;
 				NextPositionX = settings.getData().getInt("NextPosition.X") - 1;
 				NextPositionY = settings.getData().getInt("NextPosition.Y") + (4-i) * 5;
-				ClearNext(NextPositionX, NextPositionY, settings.getData().getInt("NextPosition.Z") + 1);
-				setPieceBlocks(piece, type);
+				NextPositionZ = settings.getData().getInt("NextPosition.Z") + 1;
+				ClearPieceinBox(NextPositionX, NextPositionY, NextPositionZ);
+				setPieceBlocks(NextPositionX, NextPositionY, NextPositionZ, piece, type);
 			}
 		} else {
+			Tetromino nextpiece = new Tetromino(bag[0]);
+			currentpiece = nextpiece;
 			for (int i = 0; i < 3; i++) {
 				bag[i] = bag[i+1];
 			}
@@ -103,14 +115,15 @@ public class Board {
 				Tetromino piece = new Tetromino(bag[i-1]);
 				NextPositionX = settings.getData().getInt("NextPosition.X") - 1;
 				NextPositionY = settings.getData().getInt("NextPosition.Y") + (4-i) * 5;
-				ClearNext(NextPositionX, NextPositionY, settings.getData().getInt("NextPosition.Z") + 1);
-				setPieceBlocks(piece, bag[i-1]);
+				NextPositionZ = settings.getData().getInt("NextPosition.Z") + 1;
+				ClearPieceinBox(NextPositionX, NextPositionY, NextPositionZ);
+				setPieceBlocks(NextPositionX, NextPositionY, NextPositionZ, piece, bag[i-1]);
 			}
 		}
 				
 	}
 	
-	public void ClearNext(int x, int y, int z) {
+	public void ClearPieceinBox(int x, int y, int z) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
             	Bukkit.getWorld("world").getBlockAt(x - i, y + j, z).setType(Material.AIR);
@@ -118,19 +131,40 @@ public class Board {
         }
 	}
 	
-    public void setPieceBlocks(Tetromino piece, TetrominoType type) {
-        for (int i = 0; i < 4; i++) {
-            int coordX = NextPositionX + piece.coords[i][0];
-            int coordY = NextPositionY + piece.coords[i][1];
-            setBlock(coordX, coordY, type);
+	public void HoldBox() {
+		if(isHold == false) {
+			Tetromino piece = currentpiece;
+			TetrominoType type = currentpiece.type;
+			HoldPositionX = settings.getData().getInt("HoldPosition.X") - 1;
+			HoldPositionY = settings.getData().getInt("HoldPosition.Y");
+			HoldPositionZ = settings.getData().getInt("HoldPosition.Z") + 1;
+			ClearPieceinBox(HoldPositionX, HoldPositionY, HoldPositionZ);
+			setPieceBlocks(HoldPositionX, HoldPositionY, HoldPositionZ, piece, type);
+			NextPiece();
+			isHold = true;
+		} else {
+			HoldPositionX = settings.getData().getInt("HoldPosition.X") - 1;
+			HoldPositionY = settings.getData().getInt("HoldPosition.Y");
+			HoldPositionZ = settings.getData().getInt("HoldPosition.Z") + 1;
+			ClearPieceinBox(HoldPositionX, HoldPositionY, HoldPositionZ);
+			isHold = false;		
+			
+		}
+	}
+	
+	
+    public void setPieceBlocks(int coordX, int coordY, int coordZ, Tetromino piece, TetrominoType type) {	
+    	for (int i = 0; i < 4; i++) {
+            int x, y;   
+            x = coordX + piece.coords[i][0];
+            y = coordY + piece.coords[i][1];
+            setBlock(x, y, coordZ, type);
         }
     }
     
-    public void setBlock(int x, int y, TetrominoType t) {
-        Utils.placeTetromino("world", x, y, settings.getData().getInt("NextPosition.Z") + 1, t);
+    public void setBlock(int x, int y, int z, TetrominoType t) {
+        Utils.placeTetromino("world", x, y, z, t);
     }
-   
-    
 	
 	private static void SavePosition(String string, int x, int y, int z) {
 		if (settings != null) {
