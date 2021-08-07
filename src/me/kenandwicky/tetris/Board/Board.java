@@ -1,7 +1,5 @@
 package me.kenandwicky.tetris.Board;
 
-import java.util.Random;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,6 +10,7 @@ import org.bukkit.inventory.meta.BannerMeta;
 import me.kenandwicky.tetris.Utils;
 import me.kenandwicky.tetris.Tetromino.Tetromino;
 import me.kenandwicky.tetris.Tetromino.TetrominoType;
+import me.kenandwicky.tetris.tools.RandomClass;
 
 public class Board {
 		
@@ -22,6 +21,7 @@ public class Board {
 	private static int HoldPositionX, HoldPositionY, HoldPositionZ;
 	private static Tetromino currentpiece;
 	private static Tetromino holdpiece;
+	private RandomClass rnd = new RandomClass();
 	private boolean isHold = false;
 	public static TetrominoType[][] board = new TetrominoType[20][10];
 	
@@ -86,14 +86,13 @@ public class Board {
 	}
 	
 	public void NextPiece() {
-		Random rnd = new Random();
 		if (bag[0] == null) {
-			int y = rnd.nextInt(7);
+			int y = rnd.TetrisRandom();
 			TetrominoType starttype = TetrominoType.values()[y];
 			Tetromino startpiece = new Tetromino(starttype);
 			currentpiece = startpiece;
-			for (int i = 1; i < 5; i++) {
-				int x = rnd.nextInt(7);
+			for (int i = 1; i < 5; i++) {		
+				int x = rnd.TetrisRandom();
 				TetrominoType type = TetrominoType.values()[x];
 				Tetromino piece = new Tetromino(type);
 				bag[i - 1] = type;
@@ -109,7 +108,7 @@ public class Board {
 			for (int i = 0; i < 3; i++) {
 				bag[i] = bag[i+1];
 			}
-			int x = rnd.nextInt(7);
+			int x = rnd.TetrisRandom();
 			bag[3] = TetrominoType.values()[x];
 			for (int i = 1; i < 5; i++) {
 				Tetromino piece = new Tetromino(bag[i-1]);
@@ -140,15 +139,18 @@ public class Board {
 			HoldPositionZ = settings.getData().getInt("HoldPosition.Z") + 1;
 			ClearPieceinBox(HoldPositionX, HoldPositionY, HoldPositionZ);
 			setPieceBlocks(HoldPositionX, HoldPositionY, HoldPositionZ, piece, type);
+			holdpiece = piece;
 			NextPiece();
 			isHold = true;
 		} else {
 			HoldPositionX = settings.getData().getInt("HoldPosition.X") - 1;
 			HoldPositionY = settings.getData().getInt("HoldPosition.Y");
 			HoldPositionZ = settings.getData().getInt("HoldPosition.Z") + 1;
+			Tetromino tmppiece = currentpiece;
+			currentpiece = holdpiece;
+			holdpiece = tmppiece;
 			ClearPieceinBox(HoldPositionX, HoldPositionY, HoldPositionZ);
-			isHold = false;		
-			
+			setPieceBlocks(HoldPositionX, HoldPositionY, HoldPositionZ, holdpiece, holdpiece.type);	
 		}
 	}
 	
