@@ -9,8 +9,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import me.kenandwicky.tetris.Board.Board;
+import me.kenandwicky.tetris.Board.SettingsManager;
 
 public class EventListener implements Listener {
+	SettingsManager settings = SettingsManager.getInstance();
 	
     @EventHandler
     public void onBuilderBreak(PlayerInteractEvent e) {
@@ -25,6 +27,7 @@ public class EventListener implements Listener {
     	if (e.getPlayer().getGameMode() == GameMode.ADVENTURE) {
     		Board.NameUpdate(e.getPlayer().getName());
     	}
+    	Board.initialize(e.getPlayer(), settings);
     }
 	
 }
