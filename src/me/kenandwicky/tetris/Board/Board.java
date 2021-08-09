@@ -19,8 +19,10 @@ public class Board {
 	private static TetrominoType[] bag = new TetrominoType[4];
 	private static int NextPositionX, NextPositionY, NextPositionZ;
 	private static int HoldPositionX, HoldPositionY, HoldPositionZ;
-	private static Tetromino currentpiece;
-	private static Tetromino holdpiece;
+	public static Tetromino currentpiece;
+	public static Tetromino holdpiece;
+	
+	
 	private RandomClass rnd = new RandomClass();
 	private boolean isHold = false;
 	public static TetrominoType[][] board = new TetrominoType[20][10];
@@ -218,6 +220,16 @@ public class Board {
 			Board.settings = settings;
 			Board.player = player;
 	}
+	
+	public void TetrisBoard(int boardX, int boardY, Tetromino piece, TetrominoType type) {
+		
+		int x = settings.getData().getInt("BoardPosition.X");
+		int y = settings.getData().getInt("BoardPosition.Y");
+		int z = settings.getData().getInt("BoardPosition.Z") + 1;
+		setPieceBlocks(x - boardX, y + boardY, z, piece, type);	
+		
+	}
+	
 	
 	//The East and West 
 	private String PlayerDirection(Player player) {

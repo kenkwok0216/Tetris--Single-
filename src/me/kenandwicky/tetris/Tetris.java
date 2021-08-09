@@ -1,6 +1,7 @@
 package me.kenandwicky.tetris;
 
 import me.kenandwicky.tetris.Board.*;
+import me.kenandwicky.tetris.GameLoop.Game;
 import me.kenandwicky.tetris.Listener.EventListener;
 
 import org.bukkit.Bukkit;
@@ -12,7 +13,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Tetris extends JavaPlugin {
 	
 	SettingsManager settings = SettingsManager.getInstance();
-	Board board = new Board();
+	Board boardclass = new Board();
+	public static boolean isStart = false;
 	
 	public void onEnable() {
 		Bukkit.getServer().getConsoleSender().sendMessage("Tetris is working");
@@ -31,16 +33,21 @@ public class Tetris extends JavaPlugin {
 		} 
 		
 		if(cmd.getName().equalsIgnoreCase("settetris")) {
-			Board board = new Board();
-			board.building(player, settings);	
+			boardclass.building(player, settings);	
 		}
 		
 		if(cmd.getName().equalsIgnoreCase("next")) {
-			board.NextPiece();
+			boardclass.NextPiece();
 		}
 		
 		if(cmd.getName().equalsIgnoreCase("hold")) {
-			board.HoldBox();
+			boardclass.HoldBox();
+		}
+		
+		if(cmd.getName().equalsIgnoreCase("start")) {
+			Game game = new Game(boardclass);
+			isStart = true;
+			
 		}
 		
 		

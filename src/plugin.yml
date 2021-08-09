@@ -24,4 +24,7 @@ commands:
   hold:
    usage: /<command>
    description: Test
+  start:
+   usage: /<command>
+   description: Start
   
