@@ -18,7 +18,9 @@ public class Board {
 	private static Player player;
 	private static TetrominoType[] bag = new TetrominoType[4];
 	private static int NextPositionX, NextPositionY, NextPositionZ;
-	private static int HoldPositionX, HoldPositionY, HoldPositionZ;
+	private static int HoldPositionX;
+	private static int HoldPositionY;
+	private static int HoldPositionZ;
 	public static Tetromino currentpiece;
 	public static Tetromino holdpiece;
 	
@@ -140,6 +142,7 @@ public class Board {
 			HoldPositionY = settings.getData().getInt("HoldPosition.Y");
 			HoldPositionZ = settings.getData().getInt("HoldPosition.Z") + 1;
 			ClearPieceinBox(HoldPositionX, HoldPositionY, HoldPositionZ);
+			ClearPieceinBox(HoldPositionX + 1, HoldPositionY, HoldPositionZ);
 			setPieceBlocks(HoldPositionX, HoldPositionY, HoldPositionZ, piece, type);
 			holdpiece = piece;
 			NextPiece();
@@ -152,6 +155,7 @@ public class Board {
 			currentpiece = holdpiece;
 			holdpiece = tmppiece;
 			ClearPieceinBox(HoldPositionX, HoldPositionY, HoldPositionZ);
+			ClearPieceinBox(HoldPositionX + 1, HoldPositionY, HoldPositionZ);
 			setPieceBlocks(HoldPositionX, HoldPositionY, HoldPositionZ, holdpiece, holdpiece.type);	
 		}
 	}

@@ -16,19 +16,41 @@ public class Tetromino {
 
 	public void rotateLeft() {
 		if (type == TetrominoType.O) return;
-    	for (int i = 0; i < 4; i++) {
+		//transformation
+		for (int i = 0; i < 4; i++) {
+			coords[i][0] += 1;
+			coords[i][1] -= 1;
+		}
+		//rotation
+		for (int i = 0; i < 4; i++) {
     		int tmp = coords[i][0];
     		coords[i][0] = -coords[i][1];
     		coords[i][1] = tmp;
     	}
+		//transformation	
+		for (int i = 0; i < 4; i++) {
+			coords[i][0] -= 1;
+			coords[i][1] += 1;
+		}
 	}
 
 	public void rotateRight() {
 		if (type == TetrominoType.O) return;
+		//transformation
+		for (int i = 0; i < 4; i++) {
+			coords[i][0] += 1;
+			coords[i][1] -= 1;
+		}
+		//rotation
 		for (int i = 0; i < 4; i++) {
 			int tmp = coords[i][0];
 			coords[i][0] = coords[i][1];
 			coords[i][1] = -tmp;
+		}
+		//transformation	
+		for (int i = 0; i < 4; i++) {
+			coords[i][0] -= 1;
+			coords[i][1] += 1;
 		}
 	}
 
