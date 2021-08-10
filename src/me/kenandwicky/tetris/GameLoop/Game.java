@@ -52,7 +52,6 @@ public class Game {
 		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
 		Board.currentpiece.rotateRight();
 		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
-		
 	}
 
 	public static void holdPiece() {
