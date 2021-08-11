@@ -22,36 +22,59 @@ public class Game {
 	}
 
 	public static void moveDown() {
+		if (checkCollision(xy[0], xy[1] - 1) == true) {
+			return;
+		} else {
 		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
 		xy[1] -= 1;
 		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+		}
 	}
 
 	public static void moveLeft() {
-		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
-		xy[0] -= 1;
-		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
-		
+		if (checkCollision(xy[0] - 1, xy[1]) == true) {
+			return;
+		} else {
+			board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
+			xy[0] -= 1;
+			board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+		}	
 	}
 
 	public static void moveRight() {
-		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
-		xy[0] += 1;
-		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
-		
+		if (checkCollision(xy[0] + 1, xy[1]) == true) {
+			return;
+		} else {
+			board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
+			xy[0] += 1;
+			board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+		}
 	}
 
-	public static void rotateLeft() {
-		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
+	public static void rotatedLeft() {
 		Board.currentpiece.rotateLeft();
-		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
-		
+		if (checkCollision(xy[0], xy[1]) == true) {
+			Board.currentpiece.rotateRight();
+			return;
+		} else {
+			Board.currentpiece.rotateRight();
+			board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
+			Board.currentpiece.rotateLeft();
+			board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+		}							
 	}
 
-	public static void rotateRight() {
-		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
+	public static void rotatedRight() {
 		Board.currentpiece.rotateRight();
-		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+		if (checkCollision(xy[0], xy[1]) == true) {
+			Board.currentpiece.rotateLeft();
+			return;
+		} else {
+			Board.currentpiece.rotateLeft();
+			board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
+			Board.currentpiece.rotateRight();
+			board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+		}
 	}
 
 	public static void holdPiece() {
@@ -60,6 +83,20 @@ public class Game {
 		xy[0] = 3;
 		xy[1] = 17;
 		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+	}
+	
+	private static boolean checkCollision(int x, int y) {
+		boolean collision = false;
+		for(int i = 0; i < 4; i++) {
+			int coordX = x - Board.currentpiece.coords[i][0];
+			int coordY = y + Board.currentpiece.coords[i][1];
+			//board.player.chat("(" + piece.coords[i][0] + "," + piece.coords[i][1] + ")");
+			if(board.outOfBounds(coordX, coordY) == true /*|| board.get(coordX,coordY) != TetrominoType.Empty*/) {
+				collision = true;
+				break;
+			}
+		}
+		return collision;
 	}
 	
 	

@@ -15,7 +15,7 @@ import me.kenandwicky.tetris.tools.RandomClass;
 public class Board {
 		
 	private static SettingsManager settings;
-	private static Player player;
+	public static Player player;
 	private static TetrominoType[] bag = new TetrominoType[4];
 	private static int NextPositionX, NextPositionY, NextPositionZ;
 	private static int HoldPositionX;
@@ -27,7 +27,7 @@ public class Board {
 	
 	private RandomClass rnd = new RandomClass();
 	private boolean isHold = false;
-	public static TetrominoType[][] board = new TetrominoType[20][10];
+	public static TetrominoType[][] board = new TetrominoType[10][21];
 	
 	public void building(Player player, SettingsManager settings) {
 		Board.settings = settings;
@@ -257,6 +257,18 @@ public class Board {
         } else {
         	return "South";
         }	
+	}
+
+	public boolean outOfBounds(int x, int y) {
+		if (y < 0 || y > 21 || x < 0 || x > 9) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public TetrominoType get(int x, int y) {
+		return board[x][y];
 	}
 	
 	
