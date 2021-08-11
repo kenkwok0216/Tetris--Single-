@@ -41,10 +41,12 @@ public class EventListener implements Listener {
     	}
     	
     	if(e.getAction().equals(Action.LEFT_CLICK_AIR)) {
-    		Game.rotateLeft();
+    		Game.rotatedLeft();
+    		e.getPlayer().sendMessage("Rotate left");
     		return;
     	} else if(e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-    		Game.rotateRight();
+    		Game.rotatedRight();
+    		e.getPlayer().sendMessage("Rotate Right");
     		return;
     	}
     	
@@ -77,6 +79,7 @@ public class EventListener implements Listener {
     	if (zDiff > xDiff) {
     		if (toLocation.getZ() - fromLocation.getZ() < 0) {
     			Game.moveDown();
+    			e.getPlayer().sendMessage("Down");
     		} else {
     			return;
     		}
