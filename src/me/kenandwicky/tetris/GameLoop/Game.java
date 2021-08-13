@@ -10,15 +10,21 @@ public class Game {
 	
 	public Game(Board board) {
 		Game.board = board;
-		xy[0] = 3;
-		xy[1] = 17;
+		resetposition();
 		GameStart();
 	}
 	
 	private void GameStart() {
+		board.Boardsetup();		
 		board.NextPiece();   //all the things is start
+		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);	
+	}
+	
+	public void Next() {
+		board.SaveTetris(xy[0], xy[1]);
+		resetposition();
+		board.NextPiece();
 		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
-		
 	}
 
 	public static void moveDown() {
@@ -80,8 +86,7 @@ public class Game {
 	public static void holdPiece() {
 		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
 		board.HoldBox();
-		xy[0] = 3;
-		xy[1] = 17;
+		resetposition();
 		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
 	}
 	
@@ -91,12 +96,17 @@ public class Game {
 			int coordX = x - Board.currentpiece.coords[i][0];
 			int coordY = y + Board.currentpiece.coords[i][1];
 			//board.player.chat("(" + piece.coords[i][0] + "," + piece.coords[i][1] + ")");
-			if(board.outOfBounds(coordX, coordY) == true /*|| board.get(coordX,coordY) != TetrominoType.Empty*/) {
+			if(board.outOfBounds(coordX, coordY) == true || board.get(coordX,coordY) != TetrominoType.Empty) {
 				collision = true;
 				break;
 			}
 		}
 		return collision;
+	}
+	
+	private static void resetposition() {
+		xy[0] = 3;
+		xy[1] = 17;
 	}
 	
 	

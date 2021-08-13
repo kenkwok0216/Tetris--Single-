@@ -27,4 +27,12 @@ commands:
   start:
    usage: /<command>
    description: Start
+  getposition:
+   usage: /<command>
+   description: test
+  gamenext:
+   usage: /<command>
+   description: test   
+   
+  
   

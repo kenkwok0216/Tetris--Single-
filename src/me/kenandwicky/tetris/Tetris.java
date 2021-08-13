@@ -14,11 +14,15 @@ public class Tetris extends JavaPlugin {
 	
 	SettingsManager settings = SettingsManager.getInstance();
 	Board boardclass = new Board();
+	Game game = null;
 	public static boolean isStart = false;
+	
+	
 	
 	public void onEnable() {
 		Bukkit.getServer().getConsoleSender().sendMessage("Tetris is working");
 		Bukkit.getServer().getPluginManager().registerEvents(new EventListener(), this);
+		
 		settings.setup(this);	
 	}
 	
@@ -45,10 +49,19 @@ public class Tetris extends JavaPlugin {
 		}
 		
 		if(cmd.getName().equalsIgnoreCase("start")) {
-			Game game = new Game(boardclass);
-			isStart = true;
-			
+			game = new Game(boardclass);
+			isStart = true;	
 		}
+		
+		
+		if(cmd.getName().equalsIgnoreCase("gamenext")) {
+			game.Next();
+		}
+		
+		if(cmd.getName().equalsIgnoreCase("getposition")) {
+			boardclass.get(Integer.parseInt(args[0],10), Integer.parseInt(args[1],10));
+		}
+		
 		
 		
 		

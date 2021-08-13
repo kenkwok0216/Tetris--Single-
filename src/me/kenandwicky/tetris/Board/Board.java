@@ -226,12 +226,19 @@ public class Board {
 	}
 	
 	public void TetrisBoard(int boardX, int boardY, Tetromino piece, TetrominoType type) {
-		
 		int x = settings.getData().getInt("BoardPosition.X");
 		int y = settings.getData().getInt("BoardPosition.Y");
 		int z = settings.getData().getInt("BoardPosition.Z") + 1;
-		setPieceBlocks(x - boardX, y + boardY, z, piece, type);	
-		
+		setPieceBlocks(x - boardX, y + boardY, z, piece, type);		
+	}
+	
+	public void SaveTetris(int boardX, int boardY) {
+		boardX = Math.abs(boardX);
+		boardY = Math.abs(boardY);
+    	for (int i = 0; i < 4; i++) {
+    		board[boardX - currentpiece.coords[i][0]][boardY + currentpiece.coords[i][1]] = currentpiece.type;    		
+        }
+    	
 	}
 	
 	
@@ -269,6 +276,15 @@ public class Board {
 
 	public TetrominoType get(int x, int y) {
 		return board[x][y];
+	}
+
+	public void Boardsetup() {
+		for(int i = 0; i < 10; i++) {
+			for(int j = 0; j < 21; j++) {
+				board[i][j] = TetrominoType.Empty;
+			}
+		}
+		
 	}
 	
 	
