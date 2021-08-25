@@ -17,7 +17,7 @@ public class Utils {
             /* None */     Material.AIR
     };
 	
-    static private Material tetrominoTypeToBlock(TetrominoType t) {
+    static public Material tetrominoTypeToBlock(TetrominoType t) {
         return blockTable[t.ordinal()];
     }
 	

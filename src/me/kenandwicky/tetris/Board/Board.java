@@ -233,12 +233,12 @@ public class Board {
 	}
 	
 	public void SaveTetris(int boardX, int boardY) {
-		boardX = Math.abs(boardX);
-		boardY = Math.abs(boardY);
     	for (int i = 0; i < 4; i++) {
-    		board[boardX - currentpiece.coords[i][0]][boardY + currentpiece.coords[i][1]] = currentpiece.type;    		
-        }
-    	
+    		int CoordX = boardX - currentpiece.coords[i][0];
+    		int CoordY = boardY + currentpiece.coords[i][1];
+    		board[CoordX][CoordY] = currentpiece.type;
+    		player.sendMessage("save:" + CoordX + "," + CoordY);
+        }	     	
 	}
 	
 	
