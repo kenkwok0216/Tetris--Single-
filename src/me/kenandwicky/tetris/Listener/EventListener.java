@@ -9,6 +9,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 import me.kenandwicky.tetris.GameLoop.Game;
 import me.kenandwicky.tetris.Tetris;
@@ -28,10 +29,11 @@ public class EventListener implements Listener {
     
     @EventHandler
     public void onPlayerJoing(PlayerJoinEvent e) {
+    	Board.initialize(e.getPlayer(), settings);
     	if (e.getPlayer().getGameMode() == GameMode.ADVENTURE) {
     		Board.NameUpdate(e.getPlayer().getName());
     	}
-    	Board.initialize(e.getPlayer(), settings);
+    	
     }
     
     @EventHandler
@@ -50,9 +52,7 @@ public class EventListener implements Listener {
     		return;
     	}
     	
-    }
-    
-    
+    }   
     
     
     @EventHandler
@@ -69,7 +69,11 @@ public class EventListener implements Listener {
     	double zDiff = Math.abs(toLocation.getZ() - fromLocation.getZ());
     	
     	if (xDiff > 0 || yDiff > 0 || zDiff > 0) {
-    		e.getPlayer().teleport(fromLocation.setDirection(toLocation.getDirection()));
+    		//e.getPlayer().teleport(fromLocation.setDirection(toLocation.getDirection()));
+    		fromLocation.setYaw((float) 0);
+    		fromLocation.setPitch((float) 0);
+    		e.getPlayer().teleport(fromLocation);
+    		
     	}
     	
     	if (yDiff > 0) {
@@ -79,7 +83,6 @@ public class EventListener implements Listener {
     	if (zDiff > xDiff) {
     		if (toLocation.getZ() - fromLocation.getZ() < 0) {
     			Game.moveDown();
-    			e.getPlayer().sendMessage("Down");
     		} else {
     			return;
     		}
@@ -88,15 +91,18 @@ public class EventListener implements Listener {
     	
     	if (xDiff > zDiff) {
     		if (toLocation.getX() - fromLocation.getX() > 0) {
-    			Game.moveLeft();
-    			e.getPlayer().sendMessage("Left");    			
+    			Game.moveLeft();  			
     		} else {
     			Game.moveRight();
-    			e.getPlayer().sendMessage("Right");
     		}
     		
     		return;	
     	}   	    	
+    }
+    
+    @EventHandler
+    public static void OnPlayerSwapHandEvent(PlayerSwapHandItemsEvent e) {
+    	e.setCancelled(true);
     }
     
 	

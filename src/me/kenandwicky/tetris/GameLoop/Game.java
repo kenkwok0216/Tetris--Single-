@@ -95,7 +95,6 @@ public class Game {
 		for(int i = 0; i < 4; i++) {
 			int coordX = x - Board.currentpiece.coords[i][0];
 			int coordY = y + Board.currentpiece.coords[i][1];
-			//board.player.chat("(" + piece.coords[i][0] + "," + piece.coords[i][1] + ")");
 			if(board.outOfBounds(coordX, coordY) == true || board.get(coordX,coordY) != TetrominoType.Empty) {
 				collision = true;
 				break;
