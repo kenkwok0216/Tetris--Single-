@@ -44,11 +44,11 @@ public class EventListener implements Listener {
     	
     	if(e.getAction().equals(Action.LEFT_CLICK_AIR)) {
     		Game.rotatedLeft();
-    		e.getPlayer().sendMessage("Rotate left");
+    		//e.getPlayer().sendMessage("Rotate left");
     		return;
     	} else if(e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
     		Game.rotatedRight();
-    		e.getPlayer().sendMessage("Rotate Right");
+    		//e.getPlayer().sendMessage("Rotate Right");
     		return;
     	}
     	

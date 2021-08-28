@@ -18,9 +18,8 @@ public class Board {
 	public static Player player;
 	private static TetrominoType[] bag = new TetrominoType[4];
 	private static int NextPositionX, NextPositionY, NextPositionZ;
-	private static int HoldPositionX;
-	private static int HoldPositionY;
-	private static int HoldPositionZ;
+	private static int HoldPositionX, HoldPositionY, HoldPositionZ;
+	private static int BoardPositionX, BoardPositionY, BoardPositionZ;
 	public static Tetromino currentpiece;
 	public static Tetromino holdpiece;
 	
@@ -170,7 +169,7 @@ public class Board {
         }
     }
     
-    public void setBlock(int x, int y, int z, TetrominoType t) {
+    public static void setBlock(int x, int y, int z, TetrominoType t) {
         Utils.placeTetromino("world", x, y, z, t);
     }
 	
@@ -237,7 +236,6 @@ public class Board {
     		int CoordX = boardX - currentpiece.coords[i][0];
     		int CoordY = boardY + currentpiece.coords[i][1];
     		board[CoordX][CoordY] = currentpiece.type;
-    		player.sendMessage("save:" + CoordX + "," + CoordY);
         }	     	
 	}
 	
@@ -279,12 +277,42 @@ public class Board {
 	}
 
 	public void Boardsetup() {
+		HoldPositionX = settings.getData().getInt("HoldPosition.X") - 1;
+		HoldPositionY = settings.getData().getInt("HoldPosition.Y");
+		HoldPositionZ = settings.getData().getInt("HoldPosition.Z") + 1;
+		BoardPositionX = settings.getData().getInt("BoardPosition.X");
+		BoardPositionY = settings.getData().getInt("BoardPosition.Y");
+		BoardPositionZ = settings.getData().getInt("BoardPosition.Z") + 1;
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j < 21; j++) {
 				board[i][j] = TetrominoType.Empty;
+				setBlock(BoardPositionX - i, BoardPositionY + j, BoardPositionZ, board[i][j]);
 			}
 		}
-		
+		ClearPieceinBox(HoldPositionX, HoldPositionY, HoldPositionZ);
+		ClearPieceinBox(HoldPositionX + 1, HoldPositionY, HoldPositionZ); //due to rotation, the position may be larger
+	}
+
+	public static void LineCheck() {
+		for (int i = 19; i >= 0; i--) {
+			for (int j = 0; j < 10; j++) {
+				if (board[j][i] == TetrominoType.Empty) {
+					break;
+				} else if (j == 9){
+					ClearLine(i);
+				}
+			}
+		}		
+	}
+	
+	public static void ClearLine(int line) {
+		for (int i = 0; i < 10; i++) {
+			for (int j = line; j < 20; j++) {
+				board[i][j] = board[i][j + 1];
+				setBlock(BoardPositionX - i, BoardPositionY + j, BoardPositionZ, board[i][j + 1]);
+			}
+			player.sendMessage("line is clear");
+		}
 	}
 	
 	

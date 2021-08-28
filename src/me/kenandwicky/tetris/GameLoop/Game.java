@@ -23,6 +23,7 @@ public class Game {
 	public void Next() {
 		board.SaveTetris(xy[0], xy[1]);
 		resetposition();
+		LineChecker();
 		board.NextPiece();
 		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
 	}
@@ -88,6 +89,10 @@ public class Game {
 		board.HoldBox();
 		resetposition();
 		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+	}
+	
+	public static void LineChecker() {
+		Board.LineCheck();
 	}
 	
 	private static boolean checkCollision(int x, int y) {
