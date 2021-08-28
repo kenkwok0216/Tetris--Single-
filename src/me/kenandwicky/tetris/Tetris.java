@@ -58,6 +58,8 @@ public class Tetris extends JavaPlugin {
 			game.Next();
 		}
 		
+		
+		
 		if(cmd.getName().equalsIgnoreCase("getposition")) {
 			boardclass.get(Integer.parseInt(args[0],10), Integer.parseInt(args[1],10));
 		}
