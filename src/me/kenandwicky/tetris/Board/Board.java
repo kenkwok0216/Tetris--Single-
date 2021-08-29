@@ -18,8 +18,12 @@ public class Board {
 	public static Player player;
 	private static TetrominoType[] bag = new TetrominoType[4];
 	private static int NextPositionX, NextPositionY, NextPositionZ;
+	private static int NamePositionX, NamePositionY, NamePositionZ;
 	private static int HoldPositionX, HoldPositionY, HoldPositionZ;
 	private static int BoardPositionX, BoardPositionY, BoardPositionZ;
+	private static int ScorePositionX, ScorePositionY, ScorePositionZ;
+	private static int LinePositionX, LinePositionY, LinePositionZ;
+	private static int playerscore, playerlevel, playerline;
 	public static Tetromino currentpiece;
 	public static Tetromino holdpiece;
 	
@@ -196,26 +200,62 @@ public class Board {
 	}
 	
 	public static void NameUpdate(String s) {
-		if(settings != null) {
-			int x = settings.getData().getInt("NamePosition.X");
-			int y = settings.getData().getInt("NamePosition.Y");
-			int z = settings.getData().getInt("NamePosition.Z");
-			String reverse = "";
-			for(int i = s.length() - 1; i >= 0; i--) {
-				if(s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
-					reverse = reverse + (char) (s.charAt(i) - ('a' - 'A'));
-				} else {
-					reverse = reverse + s.charAt(i);
-				}	
-			}
-			for(int i = 0; i < s.length(); i++) {
-				BuildBanner(new Location(player.getWorld(), x + i, y, z), reverse.charAt(i));
-			}
-			for(int i = 0; i < 18 - s.length(); i++) {
-				BuildBanner(new Location(player.getWorld(), x + i + s.length(), y, z), '?');
-			}
-		} else {
-			settings = SettingsManager.getInstance();
+		int x = NamePositionX;
+		int y = NamePositionY;
+		int z = NamePositionZ;
+		String reverse = "";
+		for(int i = s.length() - 1; i >= 0; i--) {
+			if(s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
+				reverse = reverse + (char) (s.charAt(i) - ('a' - 'A'));
+			} else {
+				reverse = reverse + s.charAt(i);
+			}	
+		}
+		for(int i = 0; i < s.length(); i++) {
+			BuildBanner(new Location(player.getWorld(), x + i, y, z), reverse.charAt(i));
+		}
+		for(int i = 0; i < 18 - s.length(); i++) {
+			BuildBanner(new Location(player.getWorld(), x + i + s.length(), y, z), '?');
+		}
+	}
+	
+	public static void ScoreUpdate(String s) {
+		int x = ScorePositionX;
+		int y = ScorePositionY;
+		int z = ScorePositionZ;
+		String reverse = "";
+		for(int i = s.length() - 1; i >= 0; i--) {
+			if(s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
+				reverse = reverse + (char) (s.charAt(i) - ('a' - 'A'));
+			} else {
+				reverse = reverse + s.charAt(i);
+			}	
+		}
+		for(int i = 0; i < s.length(); i++) {
+			BuildBanner(new Location(player.getWorld(), x + i, y, z), reverse.charAt(i));
+		}
+		for(int i = 0; i < 8 - s.length(); i++) {
+			BuildBanner(new Location(player.getWorld(), x + i + s.length(), y, z), '?');
+		}
+	}
+	
+	public static void LineUpdate(String s) {
+		int x = LinePositionX;
+		int y = LinePositionY;
+		int z = LinePositionZ;
+		String reverse = "";
+		for(int i = s.length() - 1; i >= 0; i--) {
+			if(s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
+				reverse = reverse + (char) (s.charAt(i) - ('a' - 'A'));
+			} else {
+				reverse = reverse + s.charAt(i);
+			}	
+		}
+		for(int i = 0; i < s.length(); i++) {
+			BuildBanner(new Location(player.getWorld(), x + i, y, z), reverse.charAt(i));
+		}
+		for(int i = 0; i < 8 - s.length(); i++) {
+			BuildBanner(new Location(player.getWorld(), x + i + s.length(), y, z), '?');
 		}
 	}
 	
@@ -283,6 +323,20 @@ public class Board {
 		BoardPositionX = settings.getData().getInt("BoardPosition.X");
 		BoardPositionY = settings.getData().getInt("BoardPosition.Y");
 		BoardPositionZ = settings.getData().getInt("BoardPosition.Z") + 1;
+		NamePositionX = settings.getData().getInt("NamePosition.X");
+		NamePositionY = settings.getData().getInt("NamePosition.Y");
+		NamePositionZ = settings.getData().getInt("NamePosition.Z");
+		ScorePositionX = settings.getData().getInt("ScorePosition.X") - 7;
+		ScorePositionY = settings.getData().getInt("ScorePosition.Y");
+		ScorePositionZ = settings.getData().getInt("ScorePosition.Z");
+		LinePositionX = settings.getData().getInt("LinePosition.X") - 7;
+		LinePositionY = settings.getData().getInt("LinePosition.Y");
+		LinePositionZ = settings.getData().getInt("LinePosition.Z"); 
+		playerscore = 0;
+		ScoreUpdate("0");
+		playerlevel = 0;
+		playerline = 0;
+		LineUpdate("0");
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j < 21; j++) {
 				board[i][j] = TetrominoType.Empty;
@@ -294,16 +348,40 @@ public class Board {
 	}
 
 	public static void LineCheck() {
+		int linecheck = 0;
 		for (int i = 19; i >= 0; i--) {
 			for (int j = 0; j < 10; j++) {
 				if (board[j][i] == TetrominoType.Empty) {
 					break;
 				} else if (j == 9){
 					ClearLine(i);
+					linecheck++;
 				}
 			}
-		}		
+		}
+		ScoreCalculation(linecheck);
 	}
+	
+	private static void ScoreCalculation(int line) {
+		if (line == 0) {
+			return;
+		} else if (line == 1) {
+			playerscore += 40 * (playerlevel + 1);
+			playerline += 1;
+		} else if (line == 2) {
+			playerscore += 100 * (playerlevel + 1);
+			playerline += 2;
+		} else if (line == 3) {
+			playerscore += 300 * (playerlevel + 1);
+			playerline += 3;
+		} else if (line == 4) {
+			playerscore += 1200 * (playerlevel + 1);
+			playerline += 4;
+		} 
+		ScoreUpdate(Integer.toString(playerscore));
+		LineUpdate(Integer.toString(playerline));
+	}
+	
 	
 	public static void ClearLine(int line) {
 		for (int i = 0; i < 10; i++) {
@@ -311,9 +389,9 @@ public class Board {
 				board[i][j] = board[i][j + 1];
 				setBlock(BoardPositionX - i, BoardPositionY + j, BoardPositionZ, board[i][j + 1]);
 			}
-			player.sendMessage("line is clear");
 		}
 	}
+	
 	
 	
 }
