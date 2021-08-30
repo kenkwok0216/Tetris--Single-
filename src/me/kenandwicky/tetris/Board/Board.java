@@ -259,6 +259,8 @@ public class Board {
 		}
 	}
 	
+	
+	//THIS METHOD IS A ADMIN TEST METHOD
 	public static void initialize(Player player, SettingsManager settings) {
 			Board.settings = settings;
 			Board.player = player;
@@ -383,6 +385,7 @@ public class Board {
 	}
 	
 	
+	//the following method is used to clear the whole line of the board
 	public static void ClearLine(int line) {
 		for (int i = 0; i < 10; i++) {
 			for (int j = line; j < 20; j++) {

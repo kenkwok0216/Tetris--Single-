@@ -19,6 +19,7 @@ import me.kenandwicky.tetris.Board.SettingsManager;
 public class EventListener implements Listener {
 	SettingsManager settings = SettingsManager.getInstance();
 	
+	//For the builder to set up the block
     @EventHandler
     public void onBuilderBreak(PlayerInteractEvent e) {
         if (!(e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
@@ -27,6 +28,7 @@ public class EventListener implements Listener {
         }
     }
     
+    //When Player "join" then update the banner
     @EventHandler
     public void onPlayerJoing(PlayerJoinEvent e) {
     	Board.initialize(e.getPlayer(), settings);
@@ -36,9 +38,11 @@ public class EventListener implements Listener {
     	
     }
     
+    
+    //Checking the user Clicking
     @EventHandler
     public void onPlayerClick(PlayerInteractEvent e) {
-    	if(Tetris.isStart == false) {
+    	if(Tetris.isStart == false) { //Tetris.isStart is use to Check whether the game start
     		return;
     	}
     	
@@ -56,8 +60,8 @@ public class EventListener implements Listener {
     
     
     @EventHandler
-    public static void onPlayerMovement(PlayerMoveEvent e) {
-    	if(Tetris.isStart == false) {
+    public static void onPlayerMovement(PlayerMoveEvent e) { //Checking the movement of user to move the block
+    	if(Tetris.isStart == false) { //Tetris.isStart is use to Check whether the game start
     		return;
     	}
     	
@@ -68,11 +72,11 @@ public class EventListener implements Listener {
     	double yDiff = Math.abs(toLocation.getY() - fromLocation.getY());
     	double zDiff = Math.abs(toLocation.getZ() - fromLocation.getZ());
     	
-    	if (xDiff > 0 || yDiff > 0 || zDiff > 0) {
+    	if (xDiff > 0 || yDiff > 0 || zDiff > 0) {  //the user have movement
     		//e.getPlayer().teleport(fromLocation.setDirection(toLocation.getDirection()));
-    		fromLocation.setYaw((float) 0);
+    		fromLocation.setYaw((float) 0);        //set the yaw and pitch to 0
     		fromLocation.setPitch((float) 0);
-    		e.getPlayer().teleport(fromLocation);
+    		e.getPlayer().teleport(fromLocation);   //teleport back to original position
     		
     	}
     	
@@ -100,6 +104,7 @@ public class EventListener implements Listener {
     	}   	    	
     }
     
+    //now allow user to use left hand
     @EventHandler
     public static void OnPlayerSwapHandEvent(PlayerSwapHandItemsEvent e) {
     	e.setCancelled(true);
