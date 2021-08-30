@@ -32,6 +32,9 @@ commands:
    description: test
   gamenext:
    usage: /<command>
+   description: test 
+  gamestart:
+   usage: /<command>
    description: test   
    
   

@@ -1,6 +1,7 @@
 package me.kenandwicky.tetris.Tetromino;
 
 public class Tetromino {
+	//this array is use to store the block of the Tetromino
     private static final int[][][] coordsTable = new int[][][]{
     	/* I */     { {  0, 1 }, {  -1,  1 }, {  -2, 1 }, {  -3, 1 } },
     	/* O */     { {  -1,  1 }, {  -2,  1 }, {  -1, 2 }, {  -2, 2 } },

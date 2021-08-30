@@ -17,7 +17,8 @@ public class Game {
 	private void GameStart() {
 		board.Boardsetup();		
 		board.NextPiece();   //all the things is start
-		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);	
+		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+		
 	}
 	
 	public void Next() {
@@ -83,7 +84,8 @@ public class Game {
 			board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
 		}
 	}
-
+	
+	//to control the hold piece
 	public static void holdPiece() {
 		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
 		board.HoldBox();
@@ -111,6 +113,14 @@ public class Game {
 	private static void resetposition() {
 		xy[0] = 3;
 		xy[1] = 17;
+	}
+
+	public static boolean CheckMoveDown() {
+		if (checkCollision(xy[0], xy[1] - 1) == true) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	

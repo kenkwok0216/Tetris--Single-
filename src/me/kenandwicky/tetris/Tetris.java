@@ -1,20 +1,22 @@
 package me.kenandwicky.tetris;
 
 import me.kenandwicky.tetris.Board.*;
-import me.kenandwicky.tetris.GameLoop.Game;
+import me.kenandwicky.tetris.GameLoop.*;
 import me.kenandwicky.tetris.Listener.EventListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Tetris extends JavaPlugin {
 	
 	SettingsManager settings = SettingsManager.getInstance();
-	Board boardclass = new Board();
-	Game game = null;
+	public static Board boardclass = new Board();
+	public static Plugin plugin;
+	public static Game game = null;
 	public static boolean isStart = false;
 	
 	
@@ -22,8 +24,9 @@ public class Tetris extends JavaPlugin {
 	public void onEnable() {
 		Bukkit.getServer().getConsoleSender().sendMessage("Tetris is working");
 		Bukkit.getServer().getPluginManager().registerEvents(new EventListener(), this);
-		
-		settings.setup(this);	
+		settings.setup(this);
+		plugin = this;
+		this.getCommand("gamestart").setExecutor(new Execute());
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -57,7 +60,6 @@ public class Tetris extends JavaPlugin {
 		if(cmd.getName().equalsIgnoreCase("gamenext")) {
 			game.Next();
 		}
-		
 		
 		
 		if(cmd.getName().equalsIgnoreCase("getposition")) {
