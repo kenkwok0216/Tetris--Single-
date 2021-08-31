@@ -1,5 +1,8 @@
 package me.kenandwicky.tetris.GameLoop;
 
+import org.bukkit.Bukkit;
+
+import me.kenandwicky.tetris.Tetris;
 import me.kenandwicky.tetris.Board.Board;
 import me.kenandwicky.tetris.Tetromino.TetrominoType;
 
@@ -25,17 +28,23 @@ public class Game {
 		board.SaveTetris(xy[0], xy[1]);
 		resetposition();
 		LineChecker();
-		board.NextPiece();
-		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+		if (Board.CheckLoss() == false) {
+			board.NextPiece();
+			board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+		} else {
+			Bukkit.getScheduler().cancelTask(Execute.gameLoopID);
+			Tetris.isStart = false;
+			Board.player.sendMessage("you loss");
+		}
 	}
 
 	public static void moveDown() {
 		if (checkCollision(xy[0], xy[1] - 1) == true) {
 			return;
 		} else {
-		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
-		xy[1] -= 1;
-		board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+			board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
+			xy[1] -= 1;
+			board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
 		}
 	}
 
@@ -122,6 +131,9 @@ public class Game {
 			return true;
 		}
 	}
+	
+	
+	
 	
 	
 }
