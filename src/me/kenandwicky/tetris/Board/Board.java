@@ -23,6 +23,7 @@ public class Board {
 	private static int BoardPositionX, BoardPositionY, BoardPositionZ;
 	private static int ScorePositionX, ScorePositionY, ScorePositionZ;
 	private static int LinePositionX, LinePositionY, LinePositionZ;
+	private static int LevelPositionX, LevelPositionY, LevelPositionZ;
 	private static int playerscore, playerlevel, playerline;
 	public static Tetromino currentpiece;
 	public static Tetromino holdpiece;
@@ -259,6 +260,26 @@ public class Board {
 		}
 	}
 	
+	public static void LevelUpdate(String s) {
+		int x = LevelPositionX;
+		int y = LevelPositionY;
+		int z = LevelPositionZ;
+		String reverse = "";
+		for(int i = s.length() - 1; i >= 0; i--) {
+			if(s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
+				reverse = reverse + (char) (s.charAt(i) - ('a' - 'A'));
+			} else {
+				reverse = reverse + s.charAt(i);
+			}	
+		}
+		for(int i = 0; i < s.length(); i++) {
+			BuildBanner(new Location(player.getWorld(), x + i, y, z), reverse.charAt(i));
+		}
+		for(int i = 0; i < 2 - s.length(); i++) {
+			BuildBanner(new Location(player.getWorld(), x + i + s.length(), y, z), '0');
+		}
+	}
+	
 	
 	//THIS METHOD IS A ADMIN TEST METHOD
 	public static void initialize(Player player, SettingsManager settings) {
@@ -334,9 +355,12 @@ public class Board {
 		LinePositionX = settings.getData().getInt("LinePosition.X") - 7;
 		LinePositionY = settings.getData().getInt("LinePosition.Y");
 		LinePositionZ = settings.getData().getInt("LinePosition.Z"); 
+		LevelPositionX = settings.getData().getInt("LinePosition.X") - 1;
+		LevelPositionY = settings.getData().getInt("LinePosition.Y");
+		LevelPositionZ = settings.getData().getInt("LinePosition.Z"); 
 		playerscore = 0;
 		ScoreUpdate("0");
-		playerlevel = 0;
+		setPlayerlevel(0);
 		playerline = 0;
 		LineUpdate("0");
 		for(int i = 0; i < 10; i++) {
@@ -368,23 +392,49 @@ public class Board {
 		if (line == 0) {
 			return;
 		} else if (line == 1) {
-			playerscore += 40 * (playerlevel + 1);
+			playerscore += 40 * (getPlayerlevel() + 1);
 			playerline += 1;
 		} else if (line == 2) {
-			playerscore += 100 * (playerlevel + 1);
+			playerscore += 100 * (getPlayerlevel() + 1);
 			playerline += 2;
 		} else if (line == 3) {
-			playerscore += 300 * (playerlevel + 1);
+			playerscore += 300 * (getPlayerlevel() + 1);
 			playerline += 3;
 		} else if (line == 4) {
-			playerscore += 1200 * (playerlevel + 1);
+			playerscore += 1200 * (getPlayerlevel() + 1);
 			playerline += 4;
 		} 
 		ScoreUpdate(Integer.toString(playerscore));
 		LineUpdate(Integer.toString(playerline));
+		if(isLevelNeedUpdate(getPlayerlevel()) == true) {
+			setPlayerlevel(getPlayerlevel() + 1);
+			LevelUpdate(Integer.toString(getPlayerlevel()));
+		}
 	}
 	
 	
+	private static boolean isLevelNeedUpdate(int level) {
+		int[] updatelevel = {10, 30, 60, 100, 150, 210, 280, 360, 450, 550, 650, 750, 850, 950, 1050, 1150, 1250, 1360, 1480, 1610, 99999999};
+		/*
+		 * Level  / line needed to update // Level  / line needed to update 
+		 * 	 0				10				  10			100
+		 *   1				20				  11			100
+		 *   2				30				  12			100
+		 *   3				40				  13			100   
+		 *   4				50				  14			100
+		 *   5				60				  15			100
+		 *   6				70				  16			110
+		 *   7				80				  17			120
+		 *   8				90				  18			130
+		 *   9			   100				  19			max
+		 */
+		if(playerline >= updatelevel[level] ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	//the following method is used to clear the whole line of the board
 	public static void ClearLine(int line) {
 		for (int i = 0; i < 10; i++) {
@@ -394,7 +444,31 @@ public class Board {
 			}
 		}
 	}
-	
+
+	public static int getPlayerlevel() {
+		return playerlevel;
+	}
+
+	public static void setPlayerlevel(int playerlevel) {
+		Board.playerlevel = playerlevel;
+	}
+
+	public static boolean CheckLoss() {
+		for(int i = 0; i < 10; i++) {
+			if(board[i][20] != TetrominoType.Empty) {
+				return true;
+			} 
+		}
+		for(int i = 0; i < 4; i++) {
+			int coordX = 3 - new Tetromino(bag[0]).coords[i][0];
+			int coordY = 17 + new Tetromino(bag[0]).coords[i][1];
+			if(board[coordX][coordY] != TetrominoType.Empty) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	
 	
 }
