@@ -131,6 +131,20 @@ public class Game {
 			return true;
 		}
 	}
+
+	public static void HardDrop() {
+		for(int i = xy[1]; i >= -1; i--) {  //from the position of the Tetromino first
+			if(checkCollision(xy[0], i - 1) == true) { //collision occur when further move down, i.e. the previous is the allowed one
+				board.TetrisBoard(xy[0], xy[1], Board.currentpiece, TetrominoType.Empty);
+				xy[1] = i;
+				board.TetrisBoard(xy[0], xy[1], Board.currentpiece, Board.currentpiece.type);
+				break;
+			} else {
+				continue;
+			}
+		}
+		Tetris.game.Next();
+	}
 	
 	
 	

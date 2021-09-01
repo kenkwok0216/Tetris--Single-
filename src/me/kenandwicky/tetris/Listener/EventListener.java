@@ -81,7 +81,7 @@ public class EventListener implements Listener {
     	}
     	
     	if (yDiff > 0) {
-    		Game.holdPiece();
+    		Game.HardDrop();
     	}
     	
     	if (zDiff > xDiff) {
@@ -108,7 +108,9 @@ public class EventListener implements Listener {
     @EventHandler
     public static void OnPlayerSwapHandEvent(PlayerSwapHandItemsEvent e) {
     	e.setCancelled(true);
+    	Game.holdPiece();
     }
+    
     
 	
 }
