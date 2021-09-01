@@ -142,25 +142,44 @@ public class Board {
 		if(isHold == false) {
 			Tetromino piece = currentpiece;
 			TetrominoType type = currentpiece.type;
-			HoldPositionX = settings.getData().getInt("HoldPosition.X") - 1;
-			HoldPositionY = settings.getData().getInt("HoldPosition.Y");
-			HoldPositionZ = settings.getData().getInt("HoldPosition.Z") + 1;
-			ClearPieceinBox(HoldPositionX, HoldPositionY, HoldPositionZ);
-			ClearPieceinBox(HoldPositionX + 1, HoldPositionY, HoldPositionZ);
-			setPieceBlocks(HoldPositionX, HoldPositionY, HoldPositionZ, piece, type);
-			holdpiece = piece;
-			NextPiece();
-			isHold = true;
+			if(type != TetrominoType.I) {
+				setPieceBlocks(HoldPositionX, HoldPositionY, HoldPositionZ, piece, type);
+				holdpiece = piece;
+				NextPiece();
+				isHold = true;
+			} else {
+				if(currentpiece.coords[3][1] == -1) { //this will happen if coords is {{-1,2}, {-1,1}, {-1,0}, {-1,1}}
+					setPieceBlocks(HoldPositionX, HoldPositionY + 1, HoldPositionZ, piece, type);
+					holdpiece = piece;
+					NextPiece();
+					isHold = true;
+				} else {
+					setPieceBlocks(HoldPositionX, HoldPositionY, HoldPositionZ, piece, type);
+					holdpiece = piece;
+					NextPiece();
+					isHold = true;
+				}
+			}
 		} else {
-			HoldPositionX = settings.getData().getInt("HoldPosition.X") - 1;
-			HoldPositionY = settings.getData().getInt("HoldPosition.Y");
-			HoldPositionZ = settings.getData().getInt("HoldPosition.Z") + 1;
 			Tetromino tmppiece = currentpiece;
 			currentpiece = holdpiece;
 			holdpiece = tmppiece;
-			ClearPieceinBox(HoldPositionX, HoldPositionY, HoldPositionZ);
-			ClearPieceinBox(HoldPositionX + 1, HoldPositionY, HoldPositionZ);
-			setPieceBlocks(HoldPositionX, HoldPositionY, HoldPositionZ, holdpiece, holdpiece.type);	
+			if(holdpiece.type != TetrominoType.I) {
+				ClearPieceinBox(HoldPositionX, HoldPositionY, HoldPositionZ);
+				ClearPieceinBox(HoldPositionX + 1, HoldPositionY, HoldPositionZ);
+				setPieceBlocks(HoldPositionX, HoldPositionY, HoldPositionZ, holdpiece, holdpiece.type);	 
+			} else {
+				if(holdpiece.coords[3][1] == -1) { //this will happen if coords is {{-1,2}, {-1,1}, {-1,0}, {-1,1}}
+					ClearPieceinBox(HoldPositionX, HoldPositionY, HoldPositionZ);
+					ClearPieceinBox(HoldPositionX + 1, HoldPositionY, HoldPositionZ);
+					setPieceBlocks(HoldPositionX, HoldPositionY + 1, HoldPositionZ, holdpiece, holdpiece.type);	 
+				} else {
+					ClearPieceinBox(HoldPositionX, HoldPositionY, HoldPositionZ);
+					ClearPieceinBox(HoldPositionX + 1, HoldPositionY, HoldPositionZ);
+					setPieceBlocks(HoldPositionX, HoldPositionY, HoldPositionZ, holdpiece, holdpiece.type);	 
+				}
+			}		
+
 		}
 	}
 	
@@ -355,12 +374,13 @@ public class Board {
 		LinePositionX = settings.getData().getInt("LinePosition.X") - 7;
 		LinePositionY = settings.getData().getInt("LinePosition.Y");
 		LinePositionZ = settings.getData().getInt("LinePosition.Z"); 
-		LevelPositionX = settings.getData().getInt("LinePosition.X") - 1;
-		LevelPositionY = settings.getData().getInt("LinePosition.Y");
-		LevelPositionZ = settings.getData().getInt("LinePosition.Z"); 
+		LevelPositionX = settings.getData().getInt("LevelPosition.X") - 1;
+		LevelPositionY = settings.getData().getInt("LevelPosition.Y");
+		LevelPositionZ = settings.getData().getInt("LevelPosition.Z"); 
 		playerscore = 0;
 		ScoreUpdate("0");
-		setPlayerlevel(0);
+		playerlevel = 0;
+		LevelUpdate("0");
 		playerline = 0;
 		LineUpdate("0");
 		for(int i = 0; i < 10; i++) {
@@ -406,8 +426,8 @@ public class Board {
 		} 
 		ScoreUpdate(Integer.toString(playerscore));
 		LineUpdate(Integer.toString(playerline));
-		if(isLevelNeedUpdate(getPlayerlevel()) == true) {
-			setPlayerlevel(getPlayerlevel() + 1);
+		if(isLevelNeedUpdate(playerlevel) == true) {
+			playerlevel += 1;
 			LevelUpdate(Integer.toString(getPlayerlevel()));
 		}
 	}
@@ -449,9 +469,6 @@ public class Board {
 		return playerlevel;
 	}
 
-	public static void setPlayerlevel(int playerlevel) {
-		Board.playerlevel = playerlevel;
-	}
 
 	public static boolean CheckLoss() {
 		for(int i = 0; i < 10; i++) {
