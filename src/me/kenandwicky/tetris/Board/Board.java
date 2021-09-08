@@ -87,7 +87,8 @@ public class Board {
 						BuildBanner(new Location(player.getWorld(), x - i, y + j, z), '?');
 					}
 				}
-			}			
+			}
+			settings.saveData();
 		} else {
 			settings = SettingsManager.getInstance();
 		}	
@@ -359,6 +360,7 @@ public class Board {
 	}
 
 	public void Boardsetup() {
+		settings.reloadConfig();
 		HoldPositionX = settings.getData().getInt("HoldPosition.X") - 1;
 		HoldPositionY = settings.getData().getInt("HoldPosition.Y");
 		HoldPositionZ = settings.getData().getInt("HoldPosition.Z") + 1;
