@@ -2,14 +2,20 @@ package me.kenandwicky.tetris.Listener;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Sign;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import me.kenandwicky.tetris.GameLoop.Game;
 import me.kenandwicky.tetris.Tetris;
@@ -34,10 +40,28 @@ public class EventListener implements Listener {
     	Board.initialize(e.getPlayer(), settings);
     	if (e.getPlayer().getGameMode() == GameMode.ADVENTURE) {
     		Board.NameUpdate(e.getPlayer().getName());
+    		ItemStack item = new ItemStack(Material.STICK, 1);
+    		ItemMeta meta = item.getItemMeta();
+    		meta.setDisplayName("rotation rods");
+    		meta.addEnchant(Enchantment.DURABILITY, 5, true);
+    		item.setItemMeta(meta);
+    		e.getPlayer().getInventory().addItem(item);
     	}
+    	
     	
     }
     
+    @EventHandler
+    public void onItemDrop (PlayerDropItemEvent e) {
+            e.setCancelled(true);
+    }
+    
+    @EventHandler
+    public void InventoryClickEvent(InventoryClickEvent e) {
+    	if (e.getWhoClicked().getGameMode() == GameMode.ADVENTURE) {
+    		e.setCancelled(true);
+    	}
+    }
     
     //Checking the user Clicking
     @EventHandler
@@ -75,7 +99,7 @@ public class EventListener implements Listener {
     	if (xDiff > 0 || yDiff > 0 || zDiff > 0) {  //the user have movement
     		//e.getPlayer().teleport(fromLocation.setDirection(toLocation.getDirection()));
     		fromLocation.setYaw((float) 0);        //set the yaw and pitch to 0
-    		fromLocation.setPitch((float) 0);
+    		fromLocation.setPitch((float) 5);
     		e.getPlayer().teleport(fromLocation);   //teleport back to original position
     		
     	}

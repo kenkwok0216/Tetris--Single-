@@ -5,6 +5,7 @@ import me.kenandwicky.tetris.GameLoop.*;
 import me.kenandwicky.tetris.Listener.EventListener;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -30,42 +31,27 @@ public class Tetris extends JavaPlugin {
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		//if sender is not a Player, sender instanceof Player will be false (i.e. this statement ensure that the sender is a Player)
+		if (!(sender instanceof Player)) {
+            sender.sendMessage(ChatColor.AQUA + "Console cannot run this command!");
+            return true;
+        }		
+		
+		//Casting by polymorphism
 		Player player = (Player) sender;
+		//if sender do not have the permission of builder, it cannot run this command
+		if(!sender.hasPermission("SingleTetirs.Builder")) {
+			sender.sendMessage(ChatColor.RED + "You don't have the permission");
+			return true;
+		}
+		
 		if (cmd.getName().equalsIgnoreCase("initializetetris")) {
 			Board.initialize(player, settings);	
 		}
 		
-		if (cmd.getName().equalsIgnoreCase("re")) {
-			Board.NameUpdate(args[0]);	
-		} 
-		
 		if(cmd.getName().equalsIgnoreCase("settetris")) {
 			boardclass.building(player, settings);	
 		}
-		
-		if(cmd.getName().equalsIgnoreCase("next")) {
-			boardclass.NextPiece();
-		}
-		
-		if(cmd.getName().equalsIgnoreCase("hold")) {
-			boardclass.HoldBox();
-		}
-		
-		if(cmd.getName().equalsIgnoreCase("start")) {
-			game = new Game(boardclass);
-			isStart = true;	
-		}
-		
-		
-		if(cmd.getName().equalsIgnoreCase("gamenext")) {
-			game.Next();
-		}
-		
-		
-		if(cmd.getName().equalsIgnoreCase("getposition")) {
-			boardclass.get(Integer.parseInt(args[0],10), Integer.parseInt(args[1],10));
-		}
-		
 		
 		
 		

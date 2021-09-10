@@ -6,36 +6,18 @@ version: 1.0
 api-version: 1.13
 
 commands:
-  givebanner:
-   usage: /<command>
-   description: Give player a custom Banner
   settetris:
    usage: /<command>
    description: To build the tetris
   initializetetris:
    usage: /<command>
-   description: Setting
-  re:
-   usage: /<command>
-   description: Settingsss
-  next:
-   usage: /<command>
-   description: Test
-  hold:
-   usage: /<command>
-   description: Test
-  start:
-   usage: /<command>
-   description: Start
-  getposition:
-   usage: /<command>
-   description: test
-  gamenext:
-   usage: /<command>
-   description: test 
+   description: Bug testing command when reloading the server
   gamestart:
    usage: /<command>
-   description: test   
+   description: To allow the game start  
    
-  
+permissions:
+ SingleTetris.Builder:
+  description: Builder of Single Tetris.
+  default: op
   
