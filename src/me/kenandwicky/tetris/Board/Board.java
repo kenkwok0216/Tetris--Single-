@@ -221,6 +221,9 @@ public class Board {
 	}
 	
 	public static void NameUpdate(String s) {
+		NamePositionX = settings.getData().getInt("NamePosition.X");
+		NamePositionY = settings.getData().getInt("NamePosition.Y");
+		NamePositionZ = settings.getData().getInt("NamePosition.Z");
 		int x = NamePositionX;
 		int y = NamePositionY;
 		int z = NamePositionZ;
@@ -367,9 +370,6 @@ public class Board {
 		BoardPositionX = settings.getData().getInt("BoardPosition.X");
 		BoardPositionY = settings.getData().getInt("BoardPosition.Y");
 		BoardPositionZ = settings.getData().getInt("BoardPosition.Z") + 1;
-		NamePositionX = settings.getData().getInt("NamePosition.X");
-		NamePositionY = settings.getData().getInt("NamePosition.Y");
-		NamePositionZ = settings.getData().getInt("NamePosition.Z");
 		ScorePositionX = settings.getData().getInt("ScorePosition.X") - 7;
 		ScorePositionY = settings.getData().getInt("ScorePosition.Y");
 		ScorePositionZ = settings.getData().getInt("ScorePosition.Z");
