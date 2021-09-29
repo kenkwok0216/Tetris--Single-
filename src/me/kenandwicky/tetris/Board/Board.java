@@ -461,8 +461,8 @@ public class Board {
 	public static void ClearLine(int line) {
 		for (int i = 0; i < 10; i++) {
 			for (int j = line; j < 20; j++) {
-				board[i][j] = board[i][j + 1];
 				setBlock(BoardPositionX - i, BoardPositionY + j, BoardPositionZ, board[i][j + 1]);
+				board[i][j] = board[i][j + 1];
 			}
 		}
 	}
