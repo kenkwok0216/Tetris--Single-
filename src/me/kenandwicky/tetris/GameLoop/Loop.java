@@ -10,7 +10,7 @@ public class Loop implements Runnable {
 		if(Game.CheckMoveDown() == true) { //it can move down return true
 			Game.moveDown();
 		} else {
-			Tetris.game.Next();
+			Tetris.game.Next(); //?
 		}
 		
 	}	

@@ -46,10 +46,12 @@ public class Tetris extends JavaPlugin {
 		}
 		
 		if (cmd.getName().equalsIgnoreCase("initializetetris")) {
+			//initialize is static method
 			Board.initialize(player, settings);	
 		}
 		
 		if(cmd.getName().equalsIgnoreCase("settetris")) {
+			//building is not static method
 			boardclass.building(player, settings);	
 		}
 		
@@ -60,3 +62,4 @@ public class Tetris extends JavaPlugin {
 	
 	
 }
+//if you have any code not understand, put "//?" to indicate, i will try to add command later
