@@ -33,7 +33,7 @@ public class EventListener implements Listener {
         	Board.setup();
         }
     }
-    
+ 
     //When Player "join" then update the banner
     @EventHandler
     public void onPlayerJoing(PlayerJoinEvent e) {

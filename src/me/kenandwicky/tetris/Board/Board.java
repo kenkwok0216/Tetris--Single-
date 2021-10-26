@@ -1,6 +1,7 @@
 package me.kenandwicky.tetris.Board;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Banner;
@@ -487,5 +488,9 @@ public class Board {
 		}
 		
 		return false;
+	}
+
+	public static int Getplayerscore() {
+		return playerscore;
 	}
 }

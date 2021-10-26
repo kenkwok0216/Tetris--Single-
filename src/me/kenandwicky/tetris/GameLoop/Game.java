@@ -1,6 +1,7 @@
 package me.kenandwicky.tetris.GameLoop;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 import me.kenandwicky.tetris.Tetris;
 import me.kenandwicky.tetris.Board.Board;
@@ -35,6 +36,7 @@ public class Game {
 			Bukkit.getScheduler().cancelTask(Execute.gameLoopID);
 			Tetris.isStart = false;
 			Board.player.sendMessage("you loss");
+			Board.player.sendTitle(ChatColor.AQUA + "Game Over, Wait until opponent to end", ChatColor.YELLOW + "Your Score is " + Board.Getplayerscore(), 10, 100, 10);
 		}
 	}
 
