@@ -1,3 +1,0 @@
-module tetris {
-	requires craftbukkit;
-}

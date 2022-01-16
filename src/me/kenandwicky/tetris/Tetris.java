@@ -9,10 +9,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Tetris extends JavaPlugin {
+public class Tetris extends JavaPlugin implements Listener{
 	
 	SettingsManager settings = SettingsManager.getInstance();
 	public static Board boardclass = new Board();
@@ -21,15 +22,17 @@ public class Tetris extends JavaPlugin {
 	public static boolean isStart = false;
 	
 	
-	
+	@Override
 	public void onEnable() {
+		plugin = this;
 		Bukkit.getServer().getConsoleSender().sendMessage("Tetris is working");
 		Bukkit.getServer().getPluginManager().registerEvents(new EventListener(), this);
 		settings.setup(this);
-		plugin = this;
 		this.getCommand("gamestart").setExecutor(new Execute());
 	}
 	
+   
+
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		//if sender is not a Player, sender instanceof Player will be false (i.e. this statement ensure that the sender is a Player)
 		if (!(sender instanceof Player)) {
