@@ -12,7 +12,7 @@ commands:
   initializetetris:
    usage: /<command>
    description: Bug testing command when reloading the server
-  gamestart:
+  tetrisstart:
    usage: /<command>
    description: To allow the game start  
    

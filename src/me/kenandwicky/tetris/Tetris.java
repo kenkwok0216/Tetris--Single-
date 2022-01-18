@@ -28,7 +28,7 @@ public class Tetris extends JavaPlugin implements Listener{
 		Bukkit.getServer().getConsoleSender().sendMessage("Tetris is working");
 		Bukkit.getServer().getPluginManager().registerEvents(new EventListener(), this);
 		settings.setup(this);
-		this.getCommand("gamestart").setExecutor(new Execute());
+		this.getCommand("tetrisstart").setExecutor(new Execute());
 	}
 	
    
