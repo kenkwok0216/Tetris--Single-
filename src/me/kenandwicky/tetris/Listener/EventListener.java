@@ -53,7 +53,9 @@ public class EventListener implements Listener {
     
     @EventHandler
     public void onItemDrop (PlayerDropItemEvent e) {
+    	if(e.getPlayer() == Board.player) {
             e.setCancelled(true);
+    	}
     }
     
     @EventHandler
@@ -70,14 +72,16 @@ public class EventListener implements Listener {
     		return;
     	}
     	
-    	if(e.getAction().equals(Action.LEFT_CLICK_AIR)) {
-    		Game.rotatedLeft();
-    		//e.getPlayer().sendMessage("Rotate left");
-    		return;
-    	} else if(e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-    		Game.rotatedRight();
-    		//e.getPlayer().sendMessage("Rotate Right");
-    		return;
+    	if(e.getPlayer() == Board.player) {
+    		if(e.getAction().equals(Action.LEFT_CLICK_AIR)) {
+    			Game.rotatedLeft();
+    			//e.getPlayer().sendMessage("Rotate left");
+    			return;
+    		} else if(e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+    			Game.rotatedRight();
+    			//e.getPlayer().sendMessage("Rotate Right");
+    			return;
+    		}
     	}
     	
     }   
@@ -89,50 +93,55 @@ public class EventListener implements Listener {
     		return;
     	}
     	
-    	Location fromLocation = e.getFrom();
-    	Location toLocation = e.getTo();
+    	if(e.getPlayer() == Board.player) {
     	
-    	double xDiff = Math.abs(toLocation.getX() - fromLocation.getX());
-    	double yDiff = Math.abs(toLocation.getY() - fromLocation.getY());
-    	double zDiff = Math.abs(toLocation.getZ() - fromLocation.getZ());
+    		Location fromLocation = e.getFrom();
+    		Location toLocation = e.getTo();
     	
-    	if (xDiff > 0 || yDiff > 0 || zDiff > 0) {  //the user have movement
-    		//e.getPlayer().teleport(fromLocation.setDirection(toLocation.getDirection()));
-    		fromLocation.setYaw((float) 0);        //set the yaw and pitch to 0
-    		fromLocation.setPitch((float) 5);
-    		e.getPlayer().teleport(fromLocation);   //teleport back to original position
+    		double xDiff = Math.abs(toLocation.getX() - fromLocation.getX());
+    		double yDiff = Math.abs(toLocation.getY() - fromLocation.getY());
+    		double zDiff = Math.abs(toLocation.getZ() - fromLocation.getZ());
+    	
+    		if (xDiff > 0 || yDiff > 0 || zDiff > 0) {  //the user have movement
+    			//e.getPlayer().teleport(fromLocation.setDirection(toLocation.getDirection()));
+    			fromLocation.setYaw((float) 0);        //set the yaw and pitch to 0
+    			fromLocation.setPitch((float) 5);
+    			e.getPlayer().teleport(fromLocation);   //teleport back to original position
     		
-    	}
+    		}
     	
-    	if (yDiff > 0) {
-    		Game.HardDrop();
-    	}
+    		if (yDiff > 0) {
+    			Game.HardDrop();
+    		}
     	
-    	if (zDiff > xDiff) {
-    		if (toLocation.getZ() - fromLocation.getZ() < 0) {
-    			Game.moveDown();
-    		} else {
+    		if (zDiff > xDiff) {
+    			if (toLocation.getZ() - fromLocation.getZ() < 0) {
+    				Game.moveDown();
+    			} else {
+    				return;
+    			}
     			return;
     		}
-    		return;
-    	}
     	
-    	if (xDiff > zDiff) {
-    		if (toLocation.getX() - fromLocation.getX() > 0) {
-    			Game.moveLeft();  			
-    		} else {
-    			Game.moveRight();
-    		}
+    		if (xDiff > zDiff) {
+    			if (toLocation.getX() - fromLocation.getX() > 0) {
+    				Game.moveLeft();  			
+    			} else {
+    				Game.moveRight();
+    			}
     		
-    		return;	
-    	}   	    	
+    			return;	
+    		}
+    	}
     }
     
     //now allow user to use left hand
     @EventHandler
     public static void OnPlayerSwapHandEvent(PlayerSwapHandItemsEvent e) {
-    	e.setCancelled(true);
-    	Game.holdPiece();
+    	if(e.getPlayer() == Board.player) {
+    		e.setCancelled(true);
+    		Game.holdPiece();
+    	}
     }
     
     
