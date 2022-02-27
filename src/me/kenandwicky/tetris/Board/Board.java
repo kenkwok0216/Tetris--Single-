@@ -493,4 +493,21 @@ public class Board {
 	public static int Getplayerscore() {
 		return playerscore;
 	}
+	
+	public static int GetPlayerline() {
+		return playerline;
+	}
+	
+	public static int GetBoardX() {
+		return BoardPositionX;
+	}
+	
+	public static int GetBoardY() {
+		return BoardPositionY;
+	}
+	
+	public static int GetBoardZ() {
+		return BoardPositionZ;
+	}
+	
 }
