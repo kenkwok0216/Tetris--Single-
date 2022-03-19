@@ -12,6 +12,7 @@ import me.kenandwicky.tetris.Utils;
 import me.kenandwicky.tetris.Tetromino.Tetromino;
 import me.kenandwicky.tetris.Tetromino.TetrominoType;
 import me.kenandwicky.tetris.tools.RandomClass;
+import me.kenandwicky.tetris.tools.DataEncryption;
 
 public class Board {
 		
@@ -39,9 +40,9 @@ public class Board {
 		Board.player = player;
 		if (PlayerDirection(player) == "South") {
 			Location blockloc = player.getLocation();
-			settings.getData().set("PlayerPosition.X", (int) blockloc.getX() - 1);
-			settings.getData().set("PlayerPosition.Y", (int) blockloc.getY());
-			settings.getData().set("PlayerPosition.Z", (int) blockloc.getZ());
+			settings.getData().set("PlayerPosition.X", DataEncryption.Encryption((int) blockloc.getX() - 1));   //encrypted
+			settings.getData().set("PlayerPosition.Y", DataEncryption.Encryption((int) blockloc.getY()));		//encrypted
+			settings.getData().set("PlayerPosition.Z", DataEncryption.Encryption((int) blockloc.getZ()));		//encrypted
 			settings.saveData();
 			blockloc = new Location(player.getWorld(),(int) blockloc.getX() - 15,(int) blockloc.getY() - 17,(int) blockloc.getZ() - 7);
 			blockloc.getBlock().setType(Material.STRUCTURE_BLOCK);		
@@ -53,15 +54,15 @@ public class Board {
 	public static void setup() {
 		if (settings != null) {
 			String worldname = player.getWorld().getName().toString();
-			int x = settings.getData().getInt("PlayerPosition.X");
-			int y = settings.getData().getInt("PlayerPosition.Y");
-			int z = settings.getData().getInt("PlayerPosition.Z");		
+			int x = DataEncryption.Decryption(settings.getData().getInt("PlayerPosition.X"));    //decrypted
+			int y = DataEncryption.Decryption(settings.getData().getInt("PlayerPosition.Y"));   //decrypted
+			int z = DataEncryption.Decryption(settings.getData().getInt("PlayerPosition.Z"));	//decrypted	
 			Bukkit.getWorld(worldname).getBlockAt(x, y, z).setType(Material.AIR);
 			x -= 14; y -= 17; z -= 7;
 			Bukkit.getWorld(worldname).getBlockAt(x, y, z).setType(Material.AIR);
-			x = settings.getData().getInt("PlayerPosition.X") + 16;
-			y = settings.getData().getInt("PlayerPosition.Y") - 17;
-			z = settings.getData().getInt("PlayerPosition.Z") + 32;
+			x = DataEncryption.Decryption(settings.getData().getInt("PlayerPosition.X")) + 16; //decrypted	
+			y = DataEncryption.Decryption(settings.getData().getInt("PlayerPosition.Y")) - 17; //decrypted	
+			z = DataEncryption.Decryption(settings.getData().getInt("PlayerPosition.Z")) + 32; //decrypted	
 			for (int i = 0; i <= 31; i++) {
 				for (int j = 0; j <= 25; j++) {
 					if (Bukkit.getWorld(worldname).getBlockAt(x - i, y + j, z).getType() == Material.RED_CONCRETE) {
@@ -106,9 +107,9 @@ public class Board {
 				TetrominoType type = TetrominoType.values()[x];
 				Tetromino piece = new Tetromino(type);
 				bag[i - 1] = type;
-				NextPositionX = settings.getData().getInt("NextPosition.X") - 1;
-				NextPositionY = settings.getData().getInt("NextPosition.Y") + (4-i) * 5;
-				NextPositionZ = settings.getData().getInt("NextPosition.Z") + 1;
+				NextPositionX = DataEncryption.Decryption(settings.getData().getInt("NextPosition.X")) - 1;     //decrypted
+				NextPositionY = DataEncryption.Decryption(settings.getData().getInt("NextPosition.Y")) + (4-i) * 5;   //decrypted
+				NextPositionZ = DataEncryption.Decryption(settings.getData().getInt("NextPosition.Z")) + 1;    //decrypted
 				ClearPieceinBox(NextPositionX, NextPositionY, NextPositionZ);
 				setPieceBlocks(NextPositionX, NextPositionY, NextPositionZ, piece, type);
 			}
@@ -122,9 +123,9 @@ public class Board {
 			bag[3] = TetrominoType.values()[x];
 			for (int i = 1; i < 5; i++) {
 				Tetromino piece = new Tetromino(bag[i-1]);
-				NextPositionX = settings.getData().getInt("NextPosition.X") - 1;
-				NextPositionY = settings.getData().getInt("NextPosition.Y") + (4-i) * 5;
-				NextPositionZ = settings.getData().getInt("NextPosition.Z") + 1;
+				NextPositionX = DataEncryption.Decryption(settings.getData().getInt("NextPosition.X")) - 1;				//decrypted
+				NextPositionY = DataEncryption.Decryption(settings.getData().getInt("NextPosition.Y")) + (4-i) * 5;		//decrypted
+				NextPositionZ = DataEncryption.Decryption(settings.getData().getInt("NextPosition.Z")) + 1;				//decrypted
 				ClearPieceinBox(NextPositionX, NextPositionY, NextPositionZ);
 				setPieceBlocks(NextPositionX, NextPositionY, NextPositionZ, piece, bag[i-1]);
 			}
@@ -201,9 +202,9 @@ public class Board {
 	
 	private static void SavePosition(String string, int x, int y, int z) {
 		if (settings != null) {
-			settings.getData().set(string + ".X", x);
-			settings.getData().set(string + ".Y", y);
-			settings.getData().set(string + ".Z", z);
+			settings.getData().set(string + ".X", DataEncryption.Encryption(x));     //encrypted
+			settings.getData().set(string + ".Y", DataEncryption.Encryption(y));    //encrypted
+			settings.getData().set(string + ".Z", DataEncryption.Encryption(z));    //encrypted
 		} else {
 			settings = SettingsManager.getInstance();
 		}
@@ -222,9 +223,9 @@ public class Board {
 	}
 	
 	public static void NameUpdate(String s) {
-		NamePositionX = settings.getData().getInt("NamePosition.X");
-		NamePositionY = settings.getData().getInt("NamePosition.Y");
-		NamePositionZ = settings.getData().getInt("NamePosition.Z");
+		NamePositionX = DataEncryption.Decryption(settings.getData().getInt("NamePosition.X"));   //decrypted
+		NamePositionY = DataEncryption.Decryption(settings.getData().getInt("NamePosition.Y"));   //decrypted
+		NamePositionZ = DataEncryption.Decryption(settings.getData().getInt("NamePosition.Z"));   //decrypted
 		int x = NamePositionX;
 		int y = NamePositionY;
 		int z = NamePositionZ;
@@ -312,9 +313,9 @@ public class Board {
 	}
 	
 	public void TetrisBoard(int boardX, int boardY, Tetromino piece, TetrominoType type) {
-		int x = settings.getData().getInt("BoardPosition.X");
-		int y = settings.getData().getInt("BoardPosition.Y");
-		int z = settings.getData().getInt("BoardPosition.Z") + 1;
+		int x = DataEncryption.Decryption(settings.getData().getInt("BoardPosition.X")); 				//decrypted
+		int y = DataEncryption.Decryption(settings.getData().getInt("BoardPosition.Y"));				//decrypted
+		int z = DataEncryption.Decryption(settings.getData().getInt("BoardPosition.Z")) + 1;			//decrypted
 		setPieceBlocks(x - boardX, y + boardY, z, piece, type);		
 	}
 	
@@ -365,21 +366,21 @@ public class Board {
 
 	public void Boardsetup() {
 		settings.reloadConfig();
-		HoldPositionX = settings.getData().getInt("HoldPosition.X") - 1;
-		HoldPositionY = settings.getData().getInt("HoldPosition.Y");
-		HoldPositionZ = settings.getData().getInt("HoldPosition.Z") + 1;
-		BoardPositionX = settings.getData().getInt("BoardPosition.X");
-		BoardPositionY = settings.getData().getInt("BoardPosition.Y");
-		BoardPositionZ = settings.getData().getInt("BoardPosition.Z") + 1;
-		ScorePositionX = settings.getData().getInt("ScorePosition.X") - 7;
-		ScorePositionY = settings.getData().getInt("ScorePosition.Y");
-		ScorePositionZ = settings.getData().getInt("ScorePosition.Z");
-		LinePositionX = settings.getData().getInt("LinePosition.X") - 7;
-		LinePositionY = settings.getData().getInt("LinePosition.Y");
-		LinePositionZ = settings.getData().getInt("LinePosition.Z"); 
-		LevelPositionX = settings.getData().getInt("LevelPosition.X") - 1;
-		LevelPositionY = settings.getData().getInt("LevelPosition.Y");
-		LevelPositionZ = settings.getData().getInt("LevelPosition.Z"); 
+		HoldPositionX = DataEncryption.Decryption(settings.getData().getInt("HoldPosition.X")) - 1;    //decrpyted
+		HoldPositionY = DataEncryption.Decryption(settings.getData().getInt("HoldPosition.Y"));			//decrpyted
+		HoldPositionZ = DataEncryption.Decryption(settings.getData().getInt("HoldPosition.Z")) + 1;		//decrpyted
+		BoardPositionX = DataEncryption.Decryption(settings.getData().getInt("BoardPosition.X"));		//decrpyted
+		BoardPositionY = DataEncryption.Decryption(settings.getData().getInt("BoardPosition.Y"));		//decrpyted
+		BoardPositionZ = DataEncryption.Decryption(settings.getData().getInt("BoardPosition.Z")) + 1;		//decrpyted
+		ScorePositionX = DataEncryption.Decryption(settings.getData().getInt("ScorePosition.X")) - 7;		//decrpyted
+		ScorePositionY = DataEncryption.Decryption(settings.getData().getInt("ScorePosition.Y"));		//decrpyted
+		ScorePositionZ = DataEncryption.Decryption(settings.getData().getInt("ScorePosition.Z"));		//decrpyted
+		LinePositionX = DataEncryption.Decryption(settings.getData().getInt("LinePosition.X")) - 7;		//decrpyted
+		LinePositionY = DataEncryption.Decryption(settings.getData().getInt("LinePosition.Y"));		//decrpyted
+		LinePositionZ = DataEncryption.Decryption(settings.getData().getInt("LinePosition.Z")); 		//decrpyted
+		LevelPositionX = DataEncryption.Decryption(settings.getData().getInt("LevelPosition.X")) - 1;		//decrpyted
+		LevelPositionY = DataEncryption.Decryption(settings.getData().getInt("LevelPosition.Y"));		//decrpyted
+		LevelPositionZ = DataEncryption.Decryption(settings.getData().getInt("LevelPosition.Z")); 		//decrpyted
 		playerscore = 0;
 		ScoreUpdate("0");
 		playerlevel = 0;
