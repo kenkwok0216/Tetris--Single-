@@ -7,6 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import me.kenandwicky.tetris.Tetris;
 import me.kenandwicky.tetris.Board.Board;
+import me.kenandwicky.tetris.Board.SettingsManager;
+import me.kenandwicky.tetris.tools.DataEncryption;
 
 public class Execute implements CommandExecutor {
 
@@ -14,6 +16,7 @@ public class Execute implements CommandExecutor {
 	public static Loop loop;
 	public static Speed speed;
 	public static boolean isGameGoing = false;
+	SettingsManager settings = SettingsManager.getInstance();
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command commnd, String label, String[] args) {
@@ -24,6 +27,40 @@ public class Execute implements CommandExecutor {
 			return true;
 		}
 		
+		int hashcode = 0;
+
+		hashcode += settings.getData().getInt("HoldPosition.X");  
+		hashcode += settings.getData().getInt("HoldPosition.Y");	
+		hashcode += settings.getData().getInt("HoldPosition.Z");
+		hashcode += settings.getData().getInt("BoardPosition.X");
+		hashcode += settings.getData().getInt("BoardPosition.Y");
+		hashcode += settings.getData().getInt("BoardPosition.Z");
+		hashcode += settings.getData().getInt("ScorePosition.X");
+		hashcode += settings.getData().getInt("ScorePosition.Y");
+		hashcode += settings.getData().getInt("ScorePosition.Z");
+		hashcode += settings.getData().getInt("LinePosition.X");
+		hashcode += settings.getData().getInt("LinePosition.Y");
+		hashcode += settings.getData().getInt("LinePosition.Z"); 
+		hashcode += settings.getData().getInt("LevelPosition.X");
+		hashcode += settings.getData().getInt("LevelPosition.Y");
+		hashcode += settings.getData().getInt("LevelPosition.Z");
+		hashcode += settings.getData().getInt("NamePosition.X");
+		hashcode += settings.getData().getInt("NamePosition.Y");
+		hashcode += settings.getData().getInt("NamePosition.Z"); 
+		hashcode += settings.getData().getInt("PlayerPosition.X");
+		hashcode += settings.getData().getInt("PlayerPosition.Y");
+		hashcode += settings.getData().getInt("PlayerPosition.Z"); 
+		hashcode += settings.getData().getInt("NextPosition.X");
+		hashcode += settings.getData().getInt("NextPosition.Y");
+		hashcode += settings.getData().getInt("NextPosition.Z");
+		hashcode = (Integer.toString(hashcode)).hashCode();
+		
+		if(hashcode ==  settings.getData().getInt("hashcode")) {
+			//nothing happen
+		} else {
+			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Tetris have Error");
+			return true;
+		}
 		
 		
 		if (gameLoopID != -1) {
